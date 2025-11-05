@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>EngQuizzesForAll - Master Your English Grammar</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet" />
+	<style>
+		body {
+			font-family: 'Inter', sans-serif;
+			background-color: #f3f4f6;
+			min-height: 100vh;
+		}
+		.bee-page-container {
+			display: flex;
+			flex-direction: column;
+			min-height: 100vh;
+		}
+		.bee-row-1 {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			background-color: #ffffff;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+			transition: background-color 0.3s, box-shadow 0.3s;
+		}
+		.main-content-area {
+			flex-grow: 1;
+			padding-top: 2rem;
+			padding-bottom: 2rem;
+		}
+		.bee-row-1 .bee-row-content {
+			max-width: 1440px;
+			margin: 0 auto;
+			padding: 0 1rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+		.bee-menu ul li {
+			padding: 10px 15px;
+			font-size: 16px;
+			font-weight: 600;
+			transition: all 0.2s;
+		}
+		.bee-menu ul li a {
+			color: #1f2937;
+			text-decoration: none;
+			transition: color 0.2s;
+		}
+		.bee-menu ul li a:hover,
+		.nav-active {
+			color: #10b981 !important;
+		}
+		.quiz-container {
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
+			padding: 1rem;
+		}
+		.quiz-card {
+			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		}
+		.option-button {
+			transition: all 0.2s;
+		}
+		.option-button:hover:not(.selected):not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+		}
+		.gradient-header {
+			background-image: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+		}
+		.q-index-button {
+			transition: background-color 0.1s, transform 0.1s;
+		}
+		@media (max-width: 640px) {
+			.summary-table-cell {
+				display: block;
+				width: 100%;
+				text-align: left !important;
+				padding-bottom: 0.5rem;
+				padding-top: 0.5rem;
+			}
+			.summary-table-row {
+				display: flex;
+				flex-wrap: wrap;
+				margin-bottom: 0;
+				padding: 0.5rem;
+				border-bottom: 1px solid #e5e7eb;
+			}
+			.summary-table-header {
+				display: none;
+			}
+			.summary-table-cell:first-child {
+				font-size: 1.125rem;
+				font-weight: 700;
+				border-bottom: none;
+			}
+			.summary-table-cell:last-child {
+				text-align: right !important;
+				border-bottom: none;
+			}
+		}
+		.history-modal {
+			max-height: 80vh;
+			overflow-y: auto;
+		}
+		.history-item {
+			transition: all 0.2s;
+		}
+		.cefr-button {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 1.25rem;
+			text-align: center;
+			border-radius: 12px;
+			box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+			transition: all 0.3s ease-in-out;
+			cursor: pointer;
+			border: 3px solid transparent;
+		}
+		.cefr-button:hover {
+			transform: translateY(-4px);
+		}
+		.cefr-button-A {
+			background-color: #ecfdf5;
+			border-color: #10b981;
+		}
+		.cefr-button-A:hover {
+			background-color: #d1fae5;
+		}
+		.cefr-button-B {
+			background-color: #eff6ff;
+			border-color: #3b82f6;
+		}
+		.cefr-button-B:hover {
+			background-color: #dbeafe;
+		}
+		.cefr-button-C {
+			background-color: #f5f3ff;
+			border-color: #8b5cf6;
+		}
+		.cefr-button-C:hover {
+			background-color: #ede9fe;
+		}
+		.progress-ring {
+			transform: rotate(-90deg);
+		}
+		.progress-ring-circle {
+			transition: stroke-dashoffset 0.3s;
+		}
+		.auth-card {
+			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+		}
+	</style>
+</head>
+<body data-lang="en">
+	<div class="bee-page-container">
+		<header class="bee-row bee-row-1">
+			<div class="bee-row-content max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+				<div class="flex items-center justify-between w-full">
+					<!-- Logo now calls showSection('home', ...) -->
+					<div class="bee-logo text-2xl font-extrabold text-gray-800 tracking-tight cursor-pointer" onclick="showSection('home', document.querySelector('[data-section=\'home\']'))">
+						Eng<span class="text-teal-500">Quizzes</span>
+					</div>
+					<!-- Desktop Menu -->
+					<div id="desktopNav" class="hidden sm:flex items-center justify-end">
+						<div class="bee-block bee-menu mr-4">
+							<nav class="bee-menu">
+								<ul id="mainMenu" class="flex items-center">
+									<li><a href="#" target="_self" data-i18n="nav_home" onclick="showSection('home', this)" data-section="home"
+											class="nav-active">HOME</a></li>
+									<li><a href="#" target="_self" data-i18n="nav_about" onclick="showSection('about', this)"
+											data-section="about">ABOUT</a></li>
+									<li><a href="#" target="_self" data-i18n="nav_quiz" onclick="showSection('quiz', this)"
+											data-section="quiz">TEST YOUR ENGLISH</a></li>
+									<li><a href="#" target="_self" data-i18n="nav_support" onclick="showSection('support', this)"
+											data-section="support">SUPPORT US</a></li>
+									<li id="navRegisterLink"><a href="#" target="_self" data-i18n="nav_register"
+											onclick="showSection('register', this)" data-section="register">REGISTER</a></li>
+									<li id="navAuthLink"><a href="#" target="_self" data-i18n="nav_login"
+											onclick="handleAuthClick(this)" data-section="login-logout">LOGIN</a></li>
+									<li>
+										<button id="languageToggle" onclick="toggleLanguage()"
+											class="ml-4 px-3 py-1.5 text-sm font-bold rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition duration-150 ease-in-out">
+											Türkçe
+										</button>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
+					<!-- Mobile Menu Button -->
+					<button id="mobileMenuButton" class="sm:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150" onclick="toggleMobileMenu()">
+						<svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+						</svg>
+						<svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+						</svg>
+					</button>
+				</div>
+			</div>
+			<!-- Mobile Menu Dropdown -->
+			<div id="mobileMenu" class="hidden sm:hidden w-full border-t border-gray-100 bg-white">
+				<nav class="py-2">
+					<ul id="mobileMenuItems" class="flex flex-col space-y-2 px-4 pb-2 text-center">
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<main class="main-content-area w-full max-w-7xl mx-auto">
+			<section id="home-section" class="content-section p-4 md:p-8">
+				<div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+					<h2
+						class="text-4xl font-extrabold text-gray-800 mb-4 gradient-header bg-clip-text text-transparent inline-block"
+						data-i18n="home_title">
+						Welcome to EngQuizzesForAll!
+					</h2>
+					<p class="text-xl text-gray-600 mb-6" data-i18n="home_subtitle">
+						The best place to sharpen your English grammar skills through quick, targeted, and fun quizzes. Now
+						featuring **3 distinct tests**!
+					</p>
+					<div class="grid md:grid-cols-3 gap-6 mt-8">
+						<div class="bg-teal-50 p-6 rounded-xl border-l-4 border-teal-500 shadow-md">
+							<h3 class="text-2xl font-semibold text-teal-700 mb-3" data-i18n="home_feature1_title">Targeted
+								Practice</h3>
+							<p class="text-gray-700" data-i18n="home_feature1_desc">Choose from 3 distinct tests, each focusing
+								on different aspects of
+								grammar, from basic tenses to advanced conditionals and phrasal verbs.</p>
+						</div>
+						<div class="bg-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500 shadow-md">
+							<h3 class="text-2xl font-semibold text-indigo-700 mb-3" data-i18n="home_feature2_title">Challenge
+								Mode</h3>
+							<p class="text-gray-700" data-i18n="home_feature2_desc">Test your speed and accuracy with our optional
+								2-minute time limit. See
+								your results and track your progress over time with the detailed history.</p>
+						</div>
+						<div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500 shadow-md">
+							<h3 class="text-2xl font-semibold text-purple-700 mb-3" data-i18n="home_feature3_title">Detailed
+								Review</h3>
+							<p class="text-gray-700" data-i18n="home_feature3_desc">After each quiz, get instant feedback,
+								including explanations for every
+								correct answer, turning every mistake into a learning opportunity.</p>
+						</div>
+					</div>
+					<div class="mt-10 text-center">
+						<button
+							class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-lg shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
+							onclick="showSection('quiz', document.querySelector('[data-section=\'quiz\']'))"
+							data-i18n="home_start_button">
+							Start Your First Test Now!
+						</button>
+					</div>
+				</div>
+			</section>
+			<section id="login-section" class="content-section hidden p-4 md:p-8 flex justify-center">
+				<div class="auth-card w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100">
+					<h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 text-center" data-i18n="login_title">
+						User Login</h2>
+					<form id="loginForm" onsubmit="loginUser(event)">
+						<div class="space-y-4">
+							<div>
+								<label class="block text-sm font-medium text-gray-700" for="loginEmail"
+									data-i18n="label_email">Email Address</label>
+								<input
+									class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+									id="loginEmail" placeholder="you@example.com" required="" type="email" />
+							</div>
+							<div>
+								<label class="block text-sm font-medium text-gray-700" for="loginPassword"
+									data-i18n="label_password">Password</label>
+								<input
+									class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+									id="loginPassword" data-i18n-placeholder="placeholder_min_chars"
+									placeholder="Minimum 6 characters" required="" type="password" minlength="6" />
+							</div>
+						</div>
+						<div id="loginFeedback"
+							class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden">
+						</div>
+						<button type="submit"
+							class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out"
+							data-i18n="login_button">
+							Log In
+						</button>
+						<p class="mt-4 text-center text-sm text-gray-600" data-i18n-html="login_no_account">
+							Don't have an account? <a href="#"
+								onclick="showSection('register', document.getElementById('navRegisterLink').querySelector('a'))"
+								class="text-teal-600 hover:text-teal-700 font-semibold" data-i18n="login_register_link">Register
+								here</a>
+						</p>
+					</form>
+				</div>
+			</section>
+			<section id="register-section" class="content-section hidden p-4 md:p-8 flex justify-center">
+				<div class="auth-card w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100">
+					<h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 text-center"
+						data-i18n="register_title">Create Account</h2>
+					<form id="registerForm" onsubmit="registerUser(event)">
+						<div class="space-y-4">
+							<div>
+								<label class="block text-sm font-medium text-gray-700" for="regEmail"
+									data-i18n="label_email">Email Address</label>
+								<input
+									class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+									id="regEmail" placeholder="you@example.com" required="" type="email" />
+							</div>
+							<div>
+								<label class="block text-sm font-medium text-gray-700" for="regPassword"
+									data-i18n="label_password">Password</label>
+								<input
+									class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+									id="regPassword" data-i18n-placeholder="placeholder_min_chars"
+									placeholder="Minimum 6 characters" required="" type="password" minlength="6" />
+							</div>
+							<div>
+								<label class="block text-sm font-medium text-gray-700" for="regName" data-i18n="label_first_name">First
+									Name</label>
+								<input
+									class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+									id="regName" placeholder="John" required="" type="text" />
+							</div>
+							<div>
+								<label class="block text-sm font-medium text-gray-700" for="regSurname" data-i18n="label_surname">Surname</label>
+								<input
+									class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+									id="regSurname" placeholder="Doe" required="" type="text" />
+							</div>
+						</div>
+						<div id="registerFeedback"
+							class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden">
+						</div>
+						<button type="submit"
+							class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out"
+							data-i18n="register_button">
+							Register Account
+						</button>
+					</form>
+				</div>
+			</section>
+			<section id="about-section" class="content-section hidden p-4 md:p-8">
+				<div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+					<h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2" data-i18n="about_title">About
+						EngQuizzesForAll</h2>
+					<p class="text-lg text-gray-600 mb-6" data-i18n="about_intro">
+						We believe that mastering English grammar shouldn't be boring. Our platform was created to provide a
+						fast, efficient, and engaging way for students and professionals to test their knowledge and identify
+						areas for improvement.
+					</p>
+					<h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4" data-i18n="about_mission_title">Our Mission
+					</h3>
+					<p class="text-gray-700 mb-4" data-i18n="about_mission_desc">
+						Our mission is simple: to make complex English grammar rules accessible to everyone. We achieve this by
+						providing 30 carefully curated questions covering the most common and challenging aspects of the
+						language, from basic tenses and prepositions to advanced conditionals and inversions.
+					</p>
+					<h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4" data-i18n="about_creator_title">The Creator
+					</h3>
+					<div class="flex items-start space-x-6 bg-gray-50 p-6 rounded-lg border">
+						<img class="w-24 h-24 rounded-full object-cover shadow-md"
+							src="https://placehold.co/96x96/6ee7b7/065f46?text=MS" data-i18n-alt="about_creator_alt"
+							alt="Musab İKBAL SUBAŞI">
+						<div>
+							<p class="text-xl font-bold text-gray-900">Musab İKBAL SUBAŞI</p>
+							<p class="text-teal-600 text-sm mb-2" data-i18n="about_creator_role">English Language Teacher</p>
+							<p class="text-gray-700 text-sm" data-i18n="about_creator_quote">
+								"This project was born out of a desire to create a clean, responsive, and distraction-free
+								environment for learning. The focus is on immediate feedback and clear explanations to ensure real
+								learning happens with every question."
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="quiz-section" class="content-section hidden">
+				<div class="quiz-container p-4">
+					<div class="quiz-card w-full max-w-xl bg-white rounded-xl overflow-hidden shadow-2xl">
+						<div class="gradient-header text-white p-6 md:p-8">
+							<h1 class="text-3xl font-bold tracking-tight" id="quizTitle" data-i18n="quiz_header_title">English
+								Quizzes</h1>
+							<p class="mt-1 text-teal-100" data-i18n="quiz_header_subtitle">Select your proficiency level to
+								challenge your grammar knowledge.</p>
+						</div>
+						<div class="p-6 md:p-8" id="startScreen">
+							<div id="quizStartGreeting" class="text-xl font-bold text-gray-800 mb-4"></div>
+							<div class="flex justify-between items-center mb-6">
+								<h2 class="text-xl font-semibold text-gray-800" data-i18n="quiz_start_confirm_details">Please
+									confirm your details.</h2>
+								<button
+									class="bg-purple-600 hover:bg-purple-700 text-white text-sm px-3 py-2 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out"
+									id="viewHistoryButton" data-i18n="quiz_start_view_history">
+									View History
+								</button>
+							</div>
+							<div class="space-y-4">
+								<div>
+									<label class="block text-sm font-medium text-gray-700" for="firstName"
+										data-i18n="label_first_name">First Name</label>
+									<input
+										class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+										id="firstName" placeholder="John" required="" type="text" />
+								</div>
+								<div>
+									<label class="block text-sm font-medium text-gray-700" for="surname"
+										data-i18n="label_surname">Surname</label>
+									<input
+										class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+										id="surname" placeholder="DOE" required="" type="text" />
+								</div>
+								<div class="pt-2 flex items-center">
+									<input class="h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
+										id="timeLimitToggle" type="checkbox" />
+									<label class="ml-2 block text-sm font-medium text-gray-700" for="timeLimitToggle"
+										data-i18n="quiz_start_enable_timer">
+										Enable 2-Minute Time Limit (Challenge Mode)
+									</label>
+								</div>
+							</div>
+							<h3 class="text-xl font-semibold text-gray-800 mb-4 mt-8" data-i18n="quiz_start_select_level">Select
+								Your CEFR Level
+							</h3>
+							<div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="cefrSelectionContainer">
+								<div class="cefr-button cefr-button-A" onclick="showLevelModal('A1 & A2')">
+									<div class="text-3xl font-extrabold text-teal-600">A1 & A2</div>
+									<div class="text-sm font-semibold text-teal-700 mt-1" data-i18n="level_a_desc">
+										Beginner/Elementary</div>
+									<div class="text-xs text-gray-600 mt-2" data-i18n="test_number_1">Test 1</div>
+								</div>
+								<div class="cefr-button cefr-button-B" onclick="showLevelModal('B1 & B2')">
+									<div class="text-3xl font-extrabold text-blue-600">B1 & B2</div>
+									<div class="text-sm font-semibold text-blue-700 mt-1" data-i18n="level_b_desc">
+										Intermediate/Upper-Intermediate</div>
+									<div class="text-xs text-gray-600 mt-2" data-i18n="test_number_11">Test 11</div>
+								</div>
+								<div class="cefr-button cefr-button-C" onclick="showLevelModal('C1 & C2')">
+									<div class="text-3xl font-extrabold text-purple-600">C1 & C2</div>
+									<div class="text-sm font-semibold text-purple-700 mt-1" data-i18n="level_c_desc">
+										Advanced/Proficiency</div>
+									<div class="text-xs text-gray-600 mt-2" data-i18n="test_number_21">Test 21</div>
+								</div>
+							</div>
+							<div class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden bg-yellow-100 text-yellow-800"
+								id="startFeedbackMessage"></div>
+						</div>
+						<div class="p-6 md:p-8 hidden" id="quizScreen">
+							<div class="mb-4 hidden" id="quizStatusBar">
+								<div class="text-sm font-medium text-gray-700 mb-1 flex justify-between">
+									<span class="font-bold" id="timerDisplay" data-i18n-prefix="quiz_status_time_remaining">02:00
+										Remaining</span>
+								</div>
+								<div class="h-2 rounded-full overflow-hidden bg-gray-200">
+									<div class="h-2 transition-all duration-300 ease-linear" id="progressBar"
+										style="width: 100%;"></div>
+								</div>
+							</div>
+							<div class="flex justify-between items-center mb-6">
+								<div class="text-lg font-medium text-teal-600" id="questionCounter"
+									data-i18n-prefix="quiz_counter">Question 1 of 10</div>
+								<button
+									class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out"
+									onclick="togglePanel(true)" data-i18n="quiz_overview_button">
+									Question Overview
+								</button>
+								<div class="text-lg font-medium text-gray-500" id="quizScore"
+									data-i18n-prefix="quiz_score">Score: 0</div>
+							</div>
+							<div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+								<p class="text-xl font-bold text-gray-800" id="currentQuestion"></p>
+							</div>
+							<div class="space-y-3" id="optionsContainer">
+							</div>
+							<div
+								class="mt-6 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden"
+								id="feedbackMessage"></div>
+							<div class="mt-4 flex justify-between space-x-4">
+								<button
+									class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50"
+									id="prevButton" onclick="previousQuestion()" data-i18n="quiz_prev_button">
+									← Previous
+								</button>
+								<button
+									class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50"
+									id="nextButton" onclick="nextQuestion()" data-i18n="quiz_next_button">
+									Next Question →
+								</button>
+							</div>
+						</div>
+						<div class="p-6 md:p-8 hidden text-center" id="resultsScreen">
+							<h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="results_title">Test Completed!</h2>
+							<p class="text-xl text-gray-600 mb-8" id="userGreeting"></p>
+							<div class="space-y-3">
+								<div
+									class="bg-green-100 text-green-800 p-4 rounded-lg font-semibold border-2 border-green-300"
+									data-i18n-prefix="results_final_score">
+									Final Score: <span class="text-2xl ml-2" id="finalScore"></span>
+								</div>
+								<div
+									class="bg-blue-100 text-blue-800 p-4 rounded-lg font-semibold border-2 border-blue-300"
+									data-i18n-prefix="results_percentage">
+									Percentage: <span class="text-2xl ml-2" id="finalPercentage"></span>
+								</div>
+							</div>
+							<div class="mt-8 text-left hidden border rounded-xl overflow-hidden shadow-lg"
+								id="summaryContainer">
+								<h3 class="p-4 bg-gray-100 text-xl font-bold text-gray-800 mb-0 border-b"
+									data-i18n="results_review_header">Detailed Test Review
+								</h3>
+							</div>
+							<!-- UPDATED BUTTON GROUP -->
+							<div class="mt-8 grid grid-cols-3 gap-3">
+								<!-- NEW RESTART BUTTON (Now at the top) -->
+								<button
+									class="col-span-3 sm:col-span-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+									onclick="restartCurrentQuiz()" data-i18n="results_restart_test">
+									Restart This Test
+								</button>
+								<!-- View Review -->
+								<button
+									class="col-span-3 sm:col-span-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+									onclick="showDirectReview()" id="viewReviewShortcut" data-i18n="results_view_review">
+									View Review
+								</button>
+								<!-- Choose Another Test -->
+								<button
+									class="col-span-3 sm:col-span-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+									onclick="resetQuiz()" data-i18n="results_another_test">
+									Choose Another Test
+								</button>
+								<!-- View History (Now full width) -->
+								<button
+									class="col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out mt-3"
+									id="viewHistoryFromResults" data-i18n="results_view_history">
+									View History
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="support-section" class="content-section hidden p-4 md:p-8">
+				<div
+					class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 text-center max-w-md mx-auto">
+					<h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2" data-i18n="support_title">Support
+						Our Mission</h2>
+					<p class="text-lg text-gray-600 mb-6" data-i18n="support_intro">
+						If you find our quizzes helpful, consider supporting our work! Your contribution helps us maintain the
+						site and create more high-quality educational content.
+					</p>
+					<div class="space-y-4">
+						<button
+							class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out"
+							onclick="copyToClipboard('https://buymeacoffee.com/musabikbal', 'supportFeedback', langData[currentLang].support_copy_success)"
+							data-i18n="support_copy_button">
+							Copy Buy Me a Coffee Link
+						</button>
+						<a href="https://buymeacoffee.com/musabikbal" target="_blank" rel="noopener noreferrer"
+							class="block w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out"
+							data-i18n="support_coffee_button">
+							Buy us a Coffee!
+						</a>
+						<div id="supportFeedback" class="hidden p-3 rounded-lg text-center font-semibold text-sm"></div>
+						<p class="text-sm text-gray-500 pt-2" data-i18n="support_thank_you">Thank you for helping us keep
+							English learning accessible!</p>
+					</div>
+				</div>
+			</section>
+		</main>
+		<div class="bee-row bee-row-3 mt-auto bg-white border-t border-gray-200">
+			<div class="bee-row-content max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+				<div class="bee-col bee-col-w12">
+					<div class="bee-block bee-paragraph text-center text-sm text-gray-500">
+						<p>© Copyright <strong>EngQuizzesForAll</strong> All Rights Reserved</p>
+						<p>Designed by Musab İKBAL SUBAŞI</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="levelSelectionModal">
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md">
+			<div class="flex justify-between items-center mb-4 border-b pb-3">
+				<h3 class="text-xl font-bold text-gray-800" id="modalLevelTitle"></h3>
+				<button class="text-gray-500 hover:text-gray-800" onclick="hideLevelModal()">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
+							stroke-width="2"></path>
+					</svg>
+				</button>
+			</div>
+			<p class="text-sm text-gray-600 mb-4" id="modalLevelDescription"></p>
+			<div class="grid grid-cols-3 sm:grid-cols-4 gap-3 overflow-y-auto max-h-96" id="testSelectionContainer">
+			</div>
+			<button
+				class="mt-6 w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+				onclick="hideLevelModal()" data-i18n="modal_back_to_levels">
+				Back to Level Selection
+			</button>
+		</div>
+	</div>
+	<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="questionPanelModal">
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-lg">
+			<div class="flex justify-between items-center mb-4 border-b pb-3">
+				<h3 class="text-xl font-bold text-gray-800" data-i18n="modal_overview_title">Question Overview (Jump to...)
+				</h3>
+				<button class="text-gray-500 hover:text-gray-800" onclick="togglePanel(false)">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
+							stroke-width="2"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="grid grid-cols-6 sm:grid-cols-8 gap-2 overflow-y-auto max-h-96" id="questionPanel">
+			</div>
+			<button
+				class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+				onclick="togglePanel(false)" data-i18n="modal_close_panel">
+				Close Panel
+			</button>
+		</div>
+	</div>
+	<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="historyModal">
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl history-modal">
+			<div class="flex justify-between items-center mb-4 border-b pb-3">
+				<h3 class="text-xl font-bold text-gray-800" data-i18n="modal_history_title">Quiz History</h3>
+				<button class="text-gray-500 hover:text-gray-800" onclick="toggleHistoryModal(false)">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
+							stroke-width="2"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="mb-4 flex justify-between items-end">
+				<div>
+					<label class="block text-sm font-medium text-gray-700 mb-1" for="historyFilter"
+						data-i18n="modal_history_filter">Filter by Test:</label>
+					<select
+						class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm"
+						id="historyFilter">
+						<option value="all" data-i18n="modal_history_all_tests">All Tests</option>
+					</select>
+				</div>
+				<div>
+					<button
+						class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+						id="clearHistoryButton" data-i18n="modal_history_clear">
+						Clear History
+					</button>
+				</div>
+			</div>
+			<div class="overflow-y-auto max-h-96" id="historyContainer">
+			</div>
+			<div class="mt-6 flex justify-between">
+				<div class="text-sm text-gray-600" id="historyStats">
+				</div>
+				<button
+					class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+					onclick="toggleHistoryModal(false)" data-i18n="modal_close">
+					Close
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="reviewDetailsModal">
+		<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-6xl history-modal">
+			<div class="flex justify-between items-center mb-4 border-b pb-3">
+				<h3 class="text-xl font-bold text-gray-800" id="reviewModalTitle" data-i18n="modal_review_title">Detailed
+					Review</h3>
+				<button class="text-gray-500 hover:text-gray-800" onclick="toggleReviewDetailsModal(false)">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg">
+						<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"
+							stroke-width="2"></path>
+					</svg>
+				</button>
+			</div>
+			<div class="overflow-y-auto max-h-[70vh] text-left border rounded-xl shadow-inner"
+				id="reviewDetailsContainer">
+			</div>
+			<button
+				class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out"
+				onclick="toggleReviewDetailsModal(false)" data-i18n="modal_close_review">
+				Close Review
+			</button>
+		</div>
+	</div>
+	<script>
+		const langData = {
+			en: {
+				lang_name: 'Türkçe',
+				lang_code: 'tr',
+				nav_home: 'HOME',
+				nav_about: 'ABOUT',
+				nav_quiz: 'TEST YOUR ENGLISH',
+				nav_support: 'SUPPORT US',
+				nav_register: 'REGISTER',
+				nav_login: 'LOGIN',
+				nav_logout: 'LOGOUT',
+				page_title: 'EngQuizzesForAll - Master Your English Grammar',
+				quiz_header_title: 'English Quizzes',
+				quiz_header_subtitle: 'Select your proficiency level to challenge your grammar knowledge.',
+				home_title: 'Welcome to EngQuizzesForAll!',
+				home_subtitle: 'The best place to sharpen your English grammar skills through quick, targeted, and fun quizzes.',
+				home_feature1_title: 'Targeted Practice',
+				home_feature1_desc: 'Choose from 3 distinct tests, each focusing on different aspects of grammar, from basic tenses to advanced conditionals and phrasal verbs.',
+				home_feature2_title: 'Challenge Mode',
+				home_feature2_desc: 'Test your speed and accuracy with our optional 2-minute time limit. See your results and track your progress over time with the detailed history.',
+				home_feature3_title: 'Detailed Review',
+				home_feature3_desc: 'After each quiz, get instant feedback, including explanations for every correct answer, turning every mistake into a learning opportunity.',
+				home_start_button: 'Start Your First Test Now!',
+				login_title: 'User Login',
+				register_title: 'Create Account',
+				label_email: 'Email Address',
+				label_password: 'Password',
+				label_first_name: 'First Name',
+				label_surname: 'Surname',
+				placeholder_min_chars: 'Minimum 6 characters',
+				login_button: 'Log In',
+				register_button: 'Register Account',
+				login_no_account: 'Don\'t have an account? <a href="#" onclick="showSection(\'register\', document.getElementById(\'navRegisterLink\').querySelector(\'a\'))" class="text-teal-600 hover:text-teal-700 font-semibold">Register here</a>',
+				about_title: 'About EngQuizzesForAll',
+				about_intro: 'We believe that mastering English grammar shouldn\'t be boring. Our platform was created to provide a fast, efficient, and engaging way for students and professionals to test their knowledge and identify areas for improvement.',
+				about_mission_title: 'Our Mission',
+				about_mission_desc: 'Our mission is simple: to make complex English grammar rules accessible to everyone. We achieve this by providing 30 carefully curated questions covering the most common and challenging aspects of the language, from basic tenses and prepositions to advanced conditionals and inversions.',
+				about_creator_title: 'The Creator',
+				about_creator_role: 'English Language Teacher',
+				about_creator_quote: '"This project was born out of a desire to create a clean, responsive, and distraction-free environment for learning. The focus is on immediate feedback and clear explanations to ensure real learning happens with every question."',
+				about_creator_alt: 'Musab İKBAL SUBAŞI',
+				quiz_start_confirm_details: 'Please confirm your details.',
+				quiz_start_view_history: 'View History',
+				quiz_start_enable_timer: 'Enable 2-Minute Time Limit (Challenge Mode)',
+				quiz_start_select_level: 'Select Your CEFR Level (1 Test per level)',
+				level_a_desc: 'Beginner/Elementary',
+				level_b_desc: 'Intermediate/Upper-Intermediate',
+				level_c_desc: 'Advanced/Proficiency',
+				test_number_1: 'Test 1',
+				test_number_11: 'Test 11',
+				test_number_21: 'Test 21',
+				quiz_status_time_remaining: ' Remaining',
+				quiz_counter: 'Question {current} of {total}',
+				quiz_score: 'Score: {score}',
+				quiz_overview_button: 'Question Overview',
+				quiz_prev_button: '← Previous',
+				quiz_next_button: 'Next Question →',
+				quiz_finish_button: 'Finish Test \u2713',
+				results_title: 'Test Completed!',
+				results_final_score: 'Final Score: ',
+				results_percentage: 'Percentage: ',
+				results_view_review: 'View Review', // Added for the new button
+				results_view_summary: 'View Detailed Summary',
+				results_hide_summary: 'Hide Detailed Summary',
+				results_review_header: 'Detailed Test Review',
+				results_another_test: 'Choose Another Test',
+				results_view_history: 'View History',
+				results_restart_test: 'Restart This Test',
+				support_title: 'Support Our Mission',
+				support_intro: 'If you find our quizzes helpful, consider supporting our work! Your contribution helps us maintain the site and create more high-quality educational content.',
+				support_copy_button: 'Copy Buy Me a Coffee Link',
+				support_coffee_button: 'Buy us a Coffee!',
+				support_thank_you: 'Thank you for helping us keep English learning accessible!',
+				support_copy_success: 'Link copied to clipboard! Thanks for your support.',
+				modal_back_to_levels: 'Back to Level Selection',
+				modal_overview_title: 'Question Overview',
+				modal_close_panel: 'Close Panel',
+				modal_history_title: 'Quiz History',
+				modal_history_filter: 'Filter by Test:',
+				modal_history_all_tests: 'All Tests',
+				modal_history_clear: 'Clear History',
+				modal_close: 'Close',
+				modal_review_title: 'Detailed Review',
+				modal_close_review: 'Close Review',
+				alert_time_expired_title: 'Time Expired!',
+				alert_time_expired_message: 'The test has ended because the time limit expired. Your score has been calculated.',
+				alert_time_expired_no_submit: 'The test has ended. You cannot submit or change answers.',
+				alert_data_error_title: 'Data Error',
+				alert_data_error_message: 'Detailed review data is missing for this entry.',
+				alert_logged_out_title: 'Logged Out',
+				alert_logged_out_message: 'You have been successfully logged out.',
+				alert_acknowledge: 'Acknowledge',
+				alert_confirm_deletion_title: 'Confirm Deletion',
+				alert_confirm_deletion_message: 'Are you sure you want to clear all your quiz history? This action cannot be undone.',
+				alert_yes_clear: 'Yes, Clear History',
+				alert_cancel: 'Cancel',
+				feedback_enter_details: "Please enter both your first name and surname before selecting a test.",
+				feedback_email_taken: 'This email is already registered.',
+				feedback_reg_failed: 'Registration failed due to hashing error.',
+				feedback_reg_success: 'Registration successful! You are now logged in.',
+				feedback_login_failed: 'Login failed: Invalid email or password.',
+				feedback_welcome_back: 'Welcome back, {name}!',
+				feedback_min_chars: 'Password must be at least 6 characters.',
+				history_no_entries: 'No quiz history found.',
+				history_complete_test: 'Complete a test to see your history here.',
+				history_time_expired: 'Time Expired',
+				history_time: 'Time: ',
+				history_no_time_limit: 'No time limit',
+				history_view_details: 'View Details',
+				history_stats_completed: 'test{s} completed',
+				history_stats_avg: 'Avg:',
+				history_stats_best: 'Best:',
+				history_stats_tests: 'Tests:',
+				summary_q: 'Q.',
+				summary_result: 'Result:',
+				summary_skipped: 'Skipped / Unanswered',
+				summary_your_choice: 'Your Choice ({label}):',
+				summary_correct: 'Correct ({label}):',
+				summary_explanation: 'Explanation',
+				results_time_expired: 'Time Expired!',
+				results_completed_in: 'Completed in {time}',
+				results_no_limit_set: 'No time limit set.',
+				msg_correct: ["Perfect!", "Amazing!", "Well Done!", "Excellent!", "You Nailed It!", "Spot On!"],
+				msg_incorrect: ["Keep Trying!", "Don't Give Up!", "A little mistake, try the next one!", "Almost there!", "Learning happens here, try again next time!"],
+				msg_correct_choice: 'Your choice is <span class="font-extrabold text-green-700">correct!</span>',
+				msg_incorrect_choice: 'The correct answer is <span class="font-extrabold text-green-700">{label}. {text}</span>.',
+			},
+			tr: {
+				lang_name: 'English',
+				lang_code: 'en',
+				nav_home: 'ANA SAYFA',
+				nav_about: 'HAKKIMIZDA',
+				nav_quiz: 'İNGİLİZCENİ TEST ET',
+				nav_support: 'BİZİ DESTEKLEYİN',
+				nav_register: 'KAYDOL',
+				nav_login: 'GİRİŞ',
+				nav_logout: 'ÇIKIŞ',
+				page_title: 'EngQuizzesForAll - İngilizce Gramer Uzmanlığınız',
+				quiz_header_title: 'İngilizce Gramer Testleri',
+				quiz_header_subtitle: 'Bir yeterlilik seviyenizi seçin.',
+				home_title: 'EngQuizzesForAll\'a Hoş Geldiniz!',
+				home_subtitle: 'İngilizce gramer becerilerinizi hızlı, hedefli ve eğlenceli testlerle keskinleştirmek için en iyi yer.',
+				home_feature1_title: 'Hedefli Çalışma',
+				home_feature1_desc: 'Temel zamanlardan ileri düzey koşul cümlelerine ve öbek fiillere kadar, her biri farklı gramer konularına odaklanan 3 farklı testten birini seçin.',
+				home_feature2_title: 'Meydan Okuma Modu',
+				home_feature2_desc: 'İsteğe bağlı 2 dakikalık süre sınırı ile hızınızı ve doğruluğunuzu test edin. Ayrıntılı geçmiş ile sonuçlarınızı görün ve zaman içindeki ilerlemenizi takip edin.',
+				home_feature3_title: 'Ayrıntılı İnceleme',
+				home_feature3_desc: 'Her testten sonra, her doğru cevap için açıklamalar da dahil olmak üzere anında geri bildirim alın, böylece her hatayı bir öğrenme fırsatına dönüştürün.',
+				home_start_button: 'Hadi Başlayalım!',
+				login_title: 'Kullanıcı Girişi',
+				register_title: 'Hesap Oluştur',
+				label_email: 'E-posta Adresi',
+				label_password: 'Şifre',
+				label_first_name: 'Ad',
+				label_surname: 'Soyad',
+				placeholder_min_chars: 'Minimum 6 karakter',
+				login_button: 'Giriş Yap',
+				register_button: 'Hesabı Kaydet',
+				login_no_account: 'Hesabın yok mu? <a href="#" onclick="showSection(\'register\', document.getElementById(\'navRegisterLink\').querySelector(\'a\'))" class="text-teal-600 hover:text-teal-700 font-semibold">Buradan kaydol</a>',
+				about_title: 'EngQuizzesForAll Hakkında',
+				about_intro: 'İngilizce gramerine hakim olmanın sıkıcı olmak zorunda olmadığına inanıyoruz. Platformumuz, öğrencilerin ve profesyonellerin bilgilerini test etmeleri ve geliştirilmesi gereken alanları belirlemeleri için hızlı, verimli ve ilgi çekici bir yol sağlamak amacıyla oluşturuldu.',
+				about_mission_title: 'Görevimiz',
+				about_mission_desc: 'Görevimiz basit: karmaşık İngilizce gramer kurallarını herkes için erişilebilir kılmak. Bunu, temel zamanlar ve edatlardan ileri düzey koşul cümlelerine ve devriklere kadar dilin en yaygın ve zorlu yönlerini kapsayan 30 özenle seçilmiş soru sunarak başarıyoruz.',
+				about_creator_title: 'Geliştirici',
+				about_creator_role: 'İngilizce Öğretmeni',
+				about_creator_quote: '"This project was born out of a desire to create a clean, responsive, and distraction-free environment for learning. The focus is on immediate feedback and clear explanations to ensure real learning happens with every question."',
+				about_creator_alt: 'Musab İKBAL SUBAŞI',
+				quiz_start_confirm_details: 'Lütfen bilgilerinizi onaylayın.',
+				quiz_start_view_history: 'Geçmişi Görüntüle',
+				quiz_start_enable_timer: '2 Dakikalık Süre Sınırını Etkinleştir (Meydan Okuma Modu)',
+				quiz_start_select_level: 'CEFR Seviyenizi Seçin',
+				level_a_desc: 'Başlangıç/Temel Seviye',
+				level_b_desc: 'Orta/Üst-Orta Seviye',
+				level_c_desc: 'İleri/Yeterlilik Seviyesi',
+				test_number_1: 'Test 1',
+				test_number_11: 'Test 11',
+				test_number_21: 'Test 21',
+				quiz_status_time_remaining: ' Kaldı',
+				quiz_counter: 'Soru {current} / {total}',
+				quiz_score: 'Puan: {score}',
+				quiz_overview_button: 'Tüm Sorular',
+				quiz_prev_button: '← Önceki Soru',
+				quiz_next_button: 'Sonraki Soru →',
+				quiz_finish_button: 'Testi Bitir \u2713',
+				results_title: 'Test Tamamlandı!',
+				results_final_score: 'Nihai Puan: ',
+				results_percentage: 'Yüzde: ',
+				results_view_review: 'İncelemeyi Görüntüle', // Added for the new button
+				results_view_summary: 'Ayrıntılı Özeti Görüntüle',
+				results_hide_summary: 'Ayrıntılı Özeti Gizle',
+				results_review_header: 'Ayrıntılı Test İncelemesi',
+				results_another_test: 'Başka Bir Test Seç',
+				results_view_history: 'Geçmişi Görüntüle',
+				results_restart_test: 'Bu Testi Yeniden Başlat',
+				support_title: 'Bu Yolda Bize Destek Olun',
+				support_intro: 'Testlerimizi faydalı buluyorsanız, çalışmamızı desteklemeyi düşünebilirsiniz! Katkınız, siteyi sürdürmemize ve daha fazla yüksek kaliteli eğitim içeriği oluşturmamıza yardımcı olur.',
+				support_copy_button: 'Bana Bir Kahve Ismarla Bağlantısını Kopyala',
+				support_coffee_button: 'Bize bir Kahve Ismarla!',
+				support_thank_you: 'İngilizce öğrenimini erişilebilir kılmamıza yardımcı olduğunuz için teşekkür ederiz!',
+				support_copy_success: 'Bağlantı panoya kopyalandı! Desteğiniz için teşekkürler.',
+				modal_back_to_levels: 'Seviye Seçimine Geri Dön',
+				modal_overview_title: 'Tüm Sorular',
+				modal_close_panel: 'Paneli Kapat',
+				modal_history_title: 'Test Geçmişi',
+				modal_history_filter: 'Teste Göre Filtrele:',
+				modal_history_all_tests: 'Tüm Testler',
+				modal_history_clear: 'Geçmişi Temizle',
+				modal_close: 'Kapat',
+				modal_review_title: 'Ayrıntılı İnceleme',
+				modal_close_review: 'İncelemeyi Kapat',
+				alert_time_expired_title: 'Süre Doldu!',
+				alert_time_expired_message: 'Süre dolduğu için test sona erdi. Puanınız hesaplandı.',
+				alert_time_expired_no_submit: 'Süre doldu. Cevapları gönderemez veya değiştiremezsiniz.',
+				alert_data_error_title: 'Veri Hatası',
+				alert_data_error_message: 'Bu giriş için ayrıntılı inceleme verisi eksik.',
+				alert_logged_out_title: 'Çıkış Yapıldı',
+				alert_logged_out_message: 'Başarıyla çıkış yaptınız.',
+				alert_acknowledge: 'Anlaşıldı',
+				alert_confirm_deletion_title: 'Silme İşlemini Onayla',
+				alert_confirm_deletion_message: 'Tüm test geçmişinizi temizlemek istediğinizden emin misiniz? Bu işlem geri alınamaz.',
+				alert_yes_clear: 'Evet, Geçmişi Temizle',
+				alert_cancel: 'İptal',
+				feedback_enter_details: "Lütfen bir test seçmeden önce hem adınızı hem de soyadınızı girin.",
+				feedback_email_taken: 'This email is already registered.',
+				feedback_reg_failed: 'Registration failed due to hashing error.',
+				feedback_reg_success: 'Registration successful! You are now logged in.',
+				feedback_login_failed: 'Login failed: Invalid email or password.',
+				feedback_welcome_back: 'Welcome back, {name}!',
+				feedback_min_chars: 'Password must be at least 6 characters.',
+				history_no_entries: 'No quiz history found.',
+				history_complete_test: 'Complete a test to see your history here.',
+				history_time_expired: 'Time Expired',
+				history_time: 'Time: ',
+				history_no_time_limit: 'No time limit',
+				history_view_details: 'View Details',
+				history_stats_completed: 'test{s} completed',
+				history_stats_avg: 'Avg:',
+				history_stats_best: 'Best:',
+				history_stats_tests: 'Tests:',
+				summary_q: 'Q.',
+				summary_result: 'Result:',
+				summary_skipped: 'Skipped / Unanswered',
+				summary_your_choice: 'Your Choice ({label}):',
+				summary_correct: 'Correct ({label}):',
+				summary_explanation: 'Explanation',
+				results_time_expired: 'Time Expired!',
+				results_completed_in: 'Completed in {time}',
+				results_no_limit_set: 'No time limit set.',
+				msg_correct: ["Perfect!", "Amazing!", "Well Done!", "Excellent!", "You Nailed It!", "Spot On!"],
+				msg_incorrect: ["Keep Trying!", "Don't Give Up!", "A little mistake, try the next one!", "Almost there!", "Learning happens here, try again next time!"],
+				msg_correct_choice: 'Your choice is <span class="font-extrabold text-green-700">correct!</span>',
+				msg_incorrect_choice: 'The correct answer is <span class="font-extrabold text-green-700">{label}. {text}</span>.',
+			}
+		};
+		let currentLang = 'en';
+		function getLangText(key, replacements = {}) {
+			let text = langData[currentLang][key] || langData['en'][key] || key;
+			for (const [k, v] of Object.entries(replacements)) {
+				text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
+			}
+			return text;
+		}
+		function applyTranslations() {
+			const elements = document.querySelectorAll('[data-i18n], [data-i18n-prefix], [data-i18n-placeholder], [data-i18n-html]');
+			document.documentElement.lang = currentLang;
+			document.title = getLangText('page_title');
+			const langToggle = document.getElementById('languageToggle');
+			langToggle.textContent = langData[currentLang].lang_name;
+			elements.forEach(el => {
+				const key = el.getAttribute('data-i18n');
+				const prefixKey = el.getAttribute('data-i18n-prefix');
+				const placeholderKey = el.getAttribute('data-i18n-placeholder');
+				const htmlKey = el.getAttribute('data-i18n-html');
+				if (key) {
+					el.textContent = getLangText(key);
+				}
+				if (prefixKey) {
+				}
+				if (placeholderKey) {
+					el.placeholder = getLangText(placeholderKey);
+				}
+				if (htmlKey) {
+					el.innerHTML = getLangText(htmlKey);
+				}
+			});
+			const activeSection = document.querySelector('.content-section:not(.hidden)');
+			if (activeSection && activeSection.id === 'quiz-section') {
+				if (!startScreen.classList.contains('hidden')) {
+					const user = getLoggedInUser();
+					if (user) {
+						document.getElementById('quizStartGreeting').textContent = getLangText('feedback_welcome_back', { name: user.firstName });
+					}
+				}
+				if (!quizScreen.classList.contains('hidden')) {
+					renderQuestion();
+				}
+			}
+		}
+		function toggleLanguage() {
+			currentLang = currentLang === 'en' ? 'tr' : 'en';
+			localStorage.setItem('quizAppLang', currentLang);
+			applyTranslations();
+			renderTestButtons();
+			if (!historyModal.classList.contains('hidden')) {
+				renderHistory();
+			}
+			if (!resultsScreen.classList.contains('hidden') && !summaryContainer.classList.contains('hidden')) {
+				renderSummaryTable();
+			}
+		}
+		function toggleMobileMenu() {
+			const mobileMenu = document.getElementById('mobileMenu');
+			const menuIcon = document.getElementById('menuIcon');
+			const closeIcon = document.getElementById('closeIcon');
+			mobileMenu.classList.toggle('hidden');
+			menuIcon.classList.toggle('hidden');
+			closeIcon.classList.toggle('hidden');
+		}
+		const sha256 = (function () {
+			function H(n) { return (n < 1e1 ? "0" : "") + n.toString(16); }
+			function K(t) { return new Uint32Array(t); }
+			function L(t) { return (t << 1) | (t >>> 31); }
+			function M(t, n, e) {
+				for (var o = K(64), r = K(t.length), i = 0, a = 0; i < t.length; i++) {
+					var s = t.charCodeAt(i);
+					s < 128 ? r[a++] = s : s < 2048 ? (r[a++] = 192 | s >>> 6, r[a++] = 128 | 63 & s) : s < 65536 ? (r[a++] = 224 | s >>> 12, r[a++] = 128 | 63 & s >>> 6, r[a++] = 128 | 63 & s) : (r[a++] = 240 | s >>> 18, r[a++] = 128 | 63 & s >>> 12, r[a++] = 128 | 63 & s >>> 6, r[a++] = 128 | 63 & s)
+				}
+				var u = a;
+				r[a++] = 128;
+				while (a % 4 != 0) r[a++] = 0;
+				var c = a, l = 8 * u;
+				r = K(r.subarray(0, c)), r[c + 3] = l;
+				var h = K([1779033703, 3144134277, 1013904242, 2773480762, 1359893119, 2600497554, 528734635, 1541459225]),
+					d = K([1116352408, 1899447447, 30493613, 2774859214, 1548603684, 1845253075, 1057001556, 1776008075, 329, 2870378385, 2371520116, 728588258, 4147045155, 3058866530, 1695183700, 4066037854, 1500085863, 4265063162, 49951639, 1774581423, 1856346720, 3175218132, 2812728082, 380312681, 3812720984, 107323719, 258167733, 404899539, 546648774, 3482320498, 268688523, 643242784, 2528726461, 2221584346, 2191690487, 3484516769, 668153090, 1503823053, 3350630737, 2307844015, 3082530560, 2988939681, 2942701770, 3140889279, 1047163013, 2981914852, 2598448372, 385960075, 4023724817, 3060561634, 1016675549, 1243904825, 412217684, 1828139943, 2780759356, 3451239634, 532859570, 1781679723, 3968817235, 1958447747, 1325977935, 1073839843, 3180726716, 2636547167, 3750689407]),
+					f = K(8);
+				for (var p = 0; p < r.length; p += 16) {
+					for (var g = 0; g < 16; g++) o[g] = r[p + g];
+					for (var g = 16; g < 64; g++) {
+						var w = o[g - 2], S = (L(w) ^ L(w >>> 9) ^ w >>> 10),
+							m = o[g - 15], v = (L(m) ^ L(m >>> 7) ^ m >>> 18);
+						o[g] = (o[g - 16] + v + o[g - 7] + S) | 0
+					}
+					for (var g = 0; g < 8; g++) f[g] = h[g];
+					for (var g = 0; g < 64; g++) {
+						var y = f[7], b = (L(y) ^ L(y >>> 6) ^ L(y >>> 11)),
+							_ = f[4], E = (_ ^ L(_ >>> 14) ^ L(_ >>> 18)),
+							x = f[0], T = (L(x) ^ L(x >>> 2) ^ L(x >>> 13)),
+							C = (f[4] & f[5] ^ ~f[4] & f[6]),
+							I = (f[0] & f[1] ^ f[0] & f[2] ^ f[1] & f[2]),
+							R = (f[7] + b + C + d[g] + o[g]) | 0,
+							j = (T + I) | 0;
+						f[7] = f[6], f[6] = f[5], f[5] = f[4], f[4] = (f[3] + R) | 0, f[3] = f[2], f[2] = f[1], f[1] = f[0], f[0] = (R + j) | 0
+					}
+					for (var g = 0; g < 8; g++) h[g] = (h[g] + f[g]) | 0
+				}
+				var z = "";
+				for (var g = 0; g < 8; g++) z += H(h[g] >>> 24) + H(h[g] >>> 16 & 255) + H(h[g] >>> 8 & 255) + H(h[g] & 255);
+				return z;
+			}
+			return L;
+		})();
+		function hashPassword(password) {
+			if (typeof crypto !== 'undefined' && crypto.subtle) {
+				const encoder = new TextEncoder();
+				const data = encoder.encode(password);
+				return crypto.subtle.digest('SHA-256', data).then(hashBuffer => {
+					const hashArray = Array.from(new Uint8Array(hashBuffer));
+					const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+					return hashHex;
+				}).catch(e => {
+					console.error("Crypto API hashing failed:", e);
+					return null;
+				});
+			} else {
+				console.warn("Using weak base64 fallback for hashing.");
+				return Promise.resolve(btoa(password));
+			}
+		}
+		const USERS_STORAGE_KEY = 'quizUsers';
+		const AUTH_STORAGE_KEY = 'loggedInUser';
+		function getUsers() {
+			const usersJson = localStorage.getItem(USERS_STORAGE_KEY);
+			return usersJson ? JSON.parse(usersJson) : {};
+		}
+		function setUsers(users) {
+			localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+		}
+		function getLoggedInUser() {
+			const authJson = localStorage.getItem(AUTH_STORAGE_KEY);
+			return authJson ? JSON.parse(authJson) : null;
+		}
+		function setLoggedInUser(user) {
+			if (user) {
+				localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+			} else {
+				localStorage.removeItem(AUTH_STORAGE_KEY);
+			}
+			checkLoginStatus();
+		}
+		function checkLoginStatus() {
+			const user = getLoggedInUser();
+			const navAuthLink = document.getElementById('navAuthLink').querySelector('a');
+			const navRegisterLink = document.getElementById('navRegisterLink');
+			const quizStartGreeting = document.getElementById('quizStartGreeting');
+			if (user) {
+				navAuthLink.textContent = getLangText('nav_logout');
+				navAuthLink.title = getLangText('nav_logout');
+				navAuthLink.setAttribute('data-action', 'logout');
+				navAuthLink.setAttribute('data-i18n', 'nav_logout');
+				navRegisterLink.classList.add('hidden');
+				quizStartGreeting.textContent = getLangText('feedback_welcome_back', { name: `${user.firstName} ${user.surname}` });
+				document.getElementById('firstName').value = user.firstName;
+				document.getElementById('surname').value = user.surname;
+			} else {
+				navAuthLink.textContent = getLangText('nav_login');
+				navAuthLink.title = getLangText('nav_login');
+				navAuthLink.setAttribute('data-action', 'login');
+				navAuthLink.setAttribute('data-i18n', 'nav_login');
+				navRegisterLink.classList.remove('hidden');
+				quizStartGreeting.textContent = '';
+				document.getElementById('firstName').value = '';
+				document.getElementById('surname').value = '';
+			}
+		}
+		function handleAuthClick(navElement) {
+			if (navElement.getAttribute('data-action') === 'logout') {
+				logoutUser();
+			} else {
+				showSection('login', navElement);
+			}
+		}
+		async function registerUser(event) {
+			event.preventDefault();
+			const email = document.getElementById('regEmail').value.trim();
+			const password = document.getElementById('regPassword').value;
+			const firstName = document.getElementById('regName').value.trim();
+			const surname = document.getElementById('regSurname').value.trim();
+			const feedbackEl = document.getElementById('registerFeedback');
+			if (password.length < 6) {
+				showFeedback(feedbackEl, getLangText('feedback_min_chars'), 'error');
+				return;
+			}
+			const users = getUsers();
+			if (users[email]) {
+				showFeedback(feedbackEl, getLangText('feedback_email_taken'), 'error');
+				return;
+			}
+			const hashedPassword = await hashPassword(password);
+			if (!hashedPassword) {
+				showFeedback(feedbackEl, getLangText('feedback_reg_failed'), 'error');
+				return;
+			}
+			users[email] = {
+				email,
+				password: hashedPassword,
+				firstName,
+				surname
+			};
+			setUsers(users);
+			setLoggedInUser({ email, firstName, surname });
+			showFeedback(feedbackEl, getLangText('feedback_reg_success'), 'success');
+			document.getElementById('registerForm').reset();
+			setTimeout(() => showSection('home', document.querySelector('[data-section="home"]')), 1000);
+		}
+		async function loginUser(event) {
+			event.preventDefault();
+			const email = document.getElementById('loginEmail').value.trim();
+			const password = document.getElementById('loginPassword').value;
+			const feedbackEl = document.getElementById('loginFeedback');
+			const users = getUsers();
+			const user = users[email];
+			if (!user) {
+				showFeedback(feedbackEl, getLangText('feedback_login_failed'), 'error');
+				return;
+			}
+			const inputHash = await hashPassword(password);
+			if (inputHash === user.password) {
+				setLoggedInUser({
+					email: user.email,
+					firstName: user.firstName,
+					surname: user.surname
+				});
+				showFeedback(feedbackEl, getLangText('feedback_welcome_back', { name: user.firstName }), 'success');
+				document.getElementById('loginForm').reset();
+				setTimeout(() => showSection('home', document.querySelector('[data-section="home"]')), 1000);
+			} else {
+				showFeedback(feedbackEl, getLangText('feedback_login_failed'), 'error');
+			}
+		}
+		function logoutUser() {
+			setLoggedInUser(null);
+			showSection('login', document.getElementById('navAuthLink').querySelector('a'));
+			alertUser(getLangText('alert_logged_out_title'), getLangText('alert_logged_out_message'));
+		}
+		function showFeedback(element, message, type) {
+			element.textContent = message;
+			element.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+			if (type === 'success') {
+				element.classList.add('bg-green-100', 'text-green-800');
+			} else {
+				element.classList.add('bg-red-100', 'text-red-800');
+			}
+			element.classList.remove('hidden');
+		}
+		function showSection(sectionId, navElement) {
+			const targetSection = document.getElementById(sectionId + '-section');
+			
+			const isLeavingQuiz = !quizScreen.classList.contains('hidden') && sectionId !== 'quiz';
+			if (isLeavingQuiz && isTimerEnabled && !isTimeExpired) {
+				pauseTimer();
+			}
+
+			document.querySelectorAll('.content-section').forEach(section => {
+				section.classList.add('hidden');
+			});
+			
+			if (sectionId === 'login-logout') {
+				if (navElement.getAttribute('data-action') === 'logout') {
+					logoutUser();
+					return;
+				}
+				document.getElementById('login-section').classList.remove('hidden');
+			} else if (targetSection) {
+				targetSection.classList.remove('hidden');
+			}
+			
+			document.querySelectorAll('#mainMenu a, #mobileMenuItems a').forEach(a => {
+				a.classList.remove('nav-active');
+			});
+			if (navElement) {
+				navElement.classList.add('nav-active');
+			}
+			
+			if (document.getElementById('mobileMenu') && !document.getElementById('mobileMenu').classList.contains('hidden')) {
+				toggleMobileMenu();
+			}
+
+			const isReturningToQuiz = !quizScreen.classList.contains('hidden') && sectionId === 'quiz';
+			if (isReturningToQuiz && isTimerEnabled && !isTimeExpired) {
+				resumeTimer();
+			}
+		}
+		function copyToClipboard(text, feedbackElementId, message) {
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(text).then(() => {
+					showSupportFeedback(feedbackElementId, message);
+				}).catch(() => {
+					fallbackCopy(text, feedbackElementId, message);
+				});
+			} else {
+				fallbackCopy(text, feedbackElementId, message);
+			}
+		}
+		function fallbackCopy(text, feedbackElementId, message) {
+			const tempInput = document.createElement('textarea');
+			tempInput.value = text;
+			tempInput.style.position = 'absolute';
+			tempInput.style.left = '-9999px';
+			document.body.appendChild(tempInput);
+			tempInput.focus();
+			tempInput.select();
+			let success = false;
+			try {
+				success = document.execCommand('copy');
+			} catch (err) {
+				console.error('Fallback copying failed: ', err);
+			}
+			document.body.removeChild(tempInput);
+			if (success) {
+				showSupportFeedback(feedbackElementId, message);
+			} else {
+				showSupportFeedback(feedbackElementId, getLangText('support_copy_button') + ': ' + text);
+			}
+		}
+		function showSupportFeedback(elementId, message) {
+			const feedbackEl = document.getElementById(elementId);
+			feedbackEl.textContent = message;
+			feedbackEl.classList.remove('hidden');
+			feedbackEl.classList.add('bg-green-100', 'text-green-800');
+			setTimeout(() => {
+				feedbackEl.classList.add('hidden');
+			}, 3000);
+		}
+		const QUESTION_BANK = [
+			{ "q": "Mert and Mehmet usually don't play soccer. Mehmet always ..... alone.", "o": ["forces", "plays", "cries", "snores", "shows"], "a": "B", "e": "The main clause uses the Simple Present tense, indicating a routine action ('always'). 'Plays' is the correct third-person singular form." },
+			{ "q": "Derya ..... to the gym every day.", "o": ["go", "goes", "going", "gone", "to go"], "a": "B", "e": "The phrase 'every day' requires the Simple Present tense, and for 'Derya' (third person singular), the verb must end in '-es'." },
+			{ "q": "They ... a new car last month.", "o": ["buy", "buys", "bought", "buying", "to buy"], "a": "C", "e": "The time phrase 'last month' specifies a completed action in the past, requiring the Simple Past tense form 'bought'." },
+			{ "q": "I am looking forward to ... you at the party.", "o": ["to see", "seeing", "see", "saw", "seen"], "a": "B", "e": "The phrase 'look forward to' is a fixed expression, and 'to' acts as a preposition, requiring the gerund form (V+ing)." },
+			{ "q": "If it ... tomorrow, we will cancel the picnic.", "o": ["rains", "rain", "rained", "is raining", "will rain"], "a": "A", "e": "This is a First Conditional structure. The 'if' clause uses the Simple Present, and the result clause uses 'will' + base verb." },
+			{ "q": "She ... her homework yet.", "o": ["didn't finish", "hasn't finished", "don't finish", "isn't finishing", "wasn't finished"], "a": "B", "e": "The word 'yet' indicates that an action is incomplete up to the present moment, which requires the Present Perfect tense." },
+			{ "q": "We ... to the beach last summer.", "o": ["go", "went", "gone", "going", "to go"], "a": "B", "e": "The time phrase 'last summer' indicates a specific time in the past, requiring the Simple Past tense ('went')." },
+			{ "q": "He ... his keys. Can you help me find them?", "o": ["loses", "lost", "has lost", "is losing", "to lose"], "a": "C", "e": "The result is visible now ('Can you help me find them?'), so the Present Perfect ('has lost') is used for an action with present consequence." },
+			{ "q": "They ... dinner when the phone rang.", "o": ["have", "had", "were having", "are having", "having"], "a": "C", "e": "The Past Continuous ('were having') is used to describe a longer, ongoing action interrupted by a shorter one ('the phone rang')." },
+			{ "q": "I ... my best friend since we were kids.", "o": ["know", "knew", "have known", "knowing", "to know"], "a": "C", "e": "The word 'since' introduces a starting point in the past that continues to the present, requiring the Present Perfect tense." },
+			{ "q": "She is ... than her brother.", "o": ["most tall", "taller", "the taller", "more tall", "tallest"], "a": "B", "e": "The word 'than' requires the comparative form of the adjective, which for 'tall' is 'taller'." },
+			{ "q": "We haven’t seen each other ... a long time.", "o": ["for", "since", "at", "in", "by"], "a": "A", "e": "'For' is used to indicate the duration of a period of time." },
+			{ "q": "I’m not interested ... politics.", "o": ["on", "at", "in", "of", "for"], "a": "C", "e": "The fixed prepositional phrase is 'interested in'." },
+			{ "q": "When I was a child, I ... play outside every day.", "o": ["use to", "used to", "was used to", "am used to", "use"], "a": "B", "e": "To express a habitual action in the past that no longer happens, use the structure 'used to' + base verb." },
+			{ "q": "She asked me where I ... the night before.", "o": ["go", "went", "had gone", "was going", "have gone"], "a": "C", "e": "In reported speech, an action preceding the reporting time ('the night before') typically shifts to the Past Perfect ('had gone')." },
+			{ "q": "Could you please ... the TV? It’s too loud.", "o": ["turn off", "turn up", "turn over", "turn on", "turn back"], "a": "A", "e": "The phrasal verb 'turn off' means to switch something off, appropriate if the sound is 'too loud'." },
+			{ "q": "He’s really good ... playing chess.", "o": ["at", "in", "on", "about", "for"], "a": "A", "e": "The correct preposition to follow the adjective 'good' when talking about skills is 'at'." },
+			{ "q": "The exam was ... easier than I expected.", "o": ["much", "too", "very", "so", "most"], "a": "A", "e": "The word 'much' is used to modify and strengthen a comparative adjective like 'easier'." },
+			{ "q": "She doesn’t have ... friends in this city.", "o": ["many", "much", "a lot", "some", "few"], "a": "A", "e": "'Friends' is a countable noun, so 'many' is the correct quantifier in a negative sentence." },
+			{ "q": "He promised ... me later.", "o": ["call", "calling", "to call", "called", "to calling"], "a": "C", "e": "The verb 'promise' is followed by the infinitive form ('to' + verb base)." },
+			{ "q": "He didn’t study enough; ..., he failed the exam.", "o": ["however", "although", "therefore", "because", "since"], "a": "C", "e": "'Therefore' is an adverb used to show a consequence or result, following a semicolon or period." },
+			{ "q": "Can you ... the lights before you leave, please?", "o": ["turn up", "turn off", "turn over", "turn around", "turn down"], "a": "B", "e": "'Turn off' means to switch something off, which is required before leaving." },
+			{ "q": "The manager insisted ... seeing all the reports today.", "o": ["on", "in", "about", "to", "for"], "a": "A", "e": "The verb 'insist' is followed by the preposition 'on' and a gerund (V+ing)." },
+			{ "q": "We were late because our flight was ... by the storm.", "o": ["delayed", "cancelled", "missed", "changed", "stopped"], "a": "A", "e": "A 'delayed' flight means its departure was held up, a common result of a storm." },
+			{ "q": "The phrase ‘give someone a hand’ means ...", "o": ["to punish them", "to help them", "to applaud them", "to ignore them", "to confuse them"], "a": "B", "e": "This is an idiom meaning 'to help someone with a task'." },
+			{ "q": "Hardly ... the meeting started when the fire alarm went off.", "o": ["had", "has", "did", "was", "have"], "a": "A", "e": "The structure 'Hardly... when' requires inversion, using the Past Perfect: 'Hardly had I...'." },
+			{ "q": "No sooner ... the door than someone knocked.", "o": ["had I closed", "I had closed", "was I closing", "have I closed", "closed I"], "a": "A", "e": "The structure 'No sooner... than' requires inversion, using the Past Perfect: 'No sooner had I...'." },
+			{ "q": "If only I ... more carefully, I wouldn’t have made that mistake.", "o": ["listen", "had listened", "have listened", "listened", "was listening"], "a": "B", "e": "'If only' expressing a wish about a past situation requires the Past Perfect ('had listened')." },
+			{ "q": "By the time we arrived, the play ... already ...", "o": ["had / begun", "has / begun", "was / beginning", "began / already", "have / begun"], "a": "A", "e": "'By the time' signals that an action ('the play beginning') was completed before another past action ('we arrived'), requiring Past Perfect." },
+			{ "q": "Were I ... the manager, I’d hire more staff immediately.", "o": ["be", "been", "was", "being", "am"], "a": "A", "e": "This is a form of conditional inversion (If I were the manager = Were I the manager), using the base form of the verb after 'Were I...'." }
+		];
+		const TOTAL_QUESTIONS = 30;
+		const TOTAL_TESTS = 3;
+		const TEST_SIZE = 10;
+		let currentQuestionIndex = 0;
+		let score = 0;
+		let shuffledQuestions = [];
+		let userName = "";
+		let userSurname = "";
+		let selectedTestNumber = 0;
+		let userAnswers = [];
+		const TOTAL_TIME_MINUTES = 2;
+		const TOTAL_TIME_SECONDS = TOTAL_TIME_MINUTES * 60;
+		let timerInterval = null;
+		let timeLeft = TOTAL_TIME_SECONDS;
+		let pausedTimeLeft = null;
+		let isTimerEnabled = false;
+		let isTimeExpired = false;
+		const HISTORY_STORAGE_KEY = 'englishQuizHistory';
+		let quizHistory = [];
+		let lastHistoryId = null;
+		const CORRECT_MESSAGES_KEY = 'msg_correct';
+		const INCORRECT_MESSAGES_KEY = 'msg_incorrect';
+		const startScreen = document.getElementById('startScreen');
+		const quizScreen = document.getElementById('quizScreen');
+		const resultsScreen = document.getElementById('resultsScreen');
+		const currentQuestionEl = document.getElementById('currentQuestion');
+		const optionsContainer = document.getElementById('optionsContainer');
+		const questionCounterEl = document.getElementById('questionCounter');
+		const quizScoreEl = document.getElementById('quizScore');
+		const feedbackMessageEl = document.getElementById('feedbackMessage');
+		const startFeedbackMessageEl = document.getElementById('startFeedbackMessage');
+		const finalScoreEl = document.getElementById('finalScore');
+		const finalPercentageEl = document.getElementById('finalPercentage');
+		const userGreetingEl = document.getElementById('userGreeting');
+		const prevButton = document.getElementById('prevButton');
+		const nextButton = document.getElementById('nextButton');
+		const quizTitleEl = document.getElementById('quizTitle');
+		const questionPanelEl = document.getElementById('questionPanel');
+		const questionPanelModal = document.getElementById('questionPanelModal');
+		const levelSelectionModal = document.getElementById('levelSelectionModal');
+		const modalLevelTitle = document.getElementById('modalLevelTitle');
+		const modalLevelDescription = document.getElementById('modalLevelDescription');
+		const cefrTestSelectionContainer = document.getElementById('testSelectionContainer');
+		const timeLimitToggle = document.getElementById('timeLimitToggle');
+		const quizStatusBar = document.getElementById('quizStatusBar');
+		const timerDisplay = document.getElementById('timerDisplay');
+		const progressBar = document.getElementById('progressBar');
+		const summaryContainer = document.getElementById('summaryContainer');
+		const historyModal = document.getElementById('historyModal');
+		const historyContainer = document.getElementById('historyContainer');
+		const historyFilter = document.getElementById('historyFilter');
+		const viewHistoryButton = document.getElementById('viewHistoryButton');
+		const viewHistoryFromResults = document.getElementById('viewHistoryFromResults');
+		const clearHistoryButton = document.getElementById('clearHistoryButton');
+		const historyStats = document.getElementById('historyStats');
+		const reviewDetailsModal = document.getElementById('reviewDetailsModal');
+		const reviewModalTitle = document.getElementById('reviewModalTitle');
+		const reviewDetailsContainer = document.getElementById('reviewDetailsContainer');
+		const mobileMenu = document.getElementById('mobileMenu');
+		const menuIcon = document.getElementById('menuIcon');
+		const closeIcon = document.getElementById('closeIcon');
+
+		function showDirectReview() {
+			if (lastHistoryId !== null) {
+				showDetailedReview(lastHistoryId);
+			} else {
+				alertUser(getLangText('alert_data_error_title'), getLangText('alert_data_error_message'));
+			}
+		}
+
+		function shuffleArray(array) {
+			for (let i = array.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1));
+				[array[i], array[j]] = [array[j], array[i]];
+			}
+			return array;
+		}
+		function getRandomMessage(messageArrayKey) {
+			const messageArray = langData[currentLang][messageArrayKey] || langData['en'][messageArrayKey];
+			if (!messageArray || messageArray.length === 0) return "Message missing.";
+			const randomIndex = Math.floor(Math.random() * messageArray.length);
+			return messageArray[randomIndex];
+		}
+		function calculateScore() {
+			let currentScore = 0;
+			for (let i = 0; i < shuffledQuestions.length; i++) {
+				if (userAnswers[i] !== null && userAnswers[i] === shuffledQuestions[i].a) {
+					currentScore++;
+				}
+			}
+			score = currentScore;
+			return currentScore;
+		}
+		function updateOptionStyles(questionData, selectedAnswer) {
+			const correctAnswer = questionData.a;
+			const optionButtons = Array.from(optionsContainer.children);
+			optionButtons.forEach(btn => {
+				const isOptionSelected = btn.getAttribute('data-answer') === selectedAnswer;
+				const isOptionCorrect = btn.getAttribute('data-answer') === correctAnswer;
+				const isUserAnswered = userAnswers[currentQuestionIndex] !== null;
+				btn.classList.remove('bg-teal-50', 'border-teal-500', 'bg-red-500', 'text-white', 'border-red-600', 'bg-green-500', 'border-green-600', 'font-bold', 'hover:bg-teal-50', 'hover:border-teal-500', 'selected');
+				btn.classList.add('bg-white', 'border-gray-300', 'text-gray-800', 'hover:bg-teal-50', 'hover:border-teal-500');
+				if (isUserAnswered) {
+					btn.disabled = true;
+					if (isOptionCorrect) {
+						btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'font-bold');
+						btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
+					} else if (isOptionSelected) {
+						btn.classList.add('bg-red-500', 'text-white', 'border-red-600', 'font-bold', 'selected');
+						btn.classList.remove('hover:bg-teal-50', 'hover:border-teal-500');
+					} else {
+						btn.classList.add('opacity-75');
+					}
+				} else {
+					btn.disabled = isTimeExpired;
+				}
+			});
+		}
+		function alertUser(title, message) {
+			const modal = document.createElement('div');
+			modal.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
+			modal.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
+                    <h4 class="text-xl font-bold mb-2 text-red-600">${title}</h4>
+                    <p class="text-gray-600 mb-4">${message}</p>
+                    <button onclick="this.closest('.fixed').remove()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150">
+                        ${getLangText('alert_acknowledge')}
+                    </button>
+                </div>
+            `;
+			document.body.appendChild(modal);
+		}
+		function displayAnswerFeedback(questionData, selectedAnswer) {
+			const correctAnswer = questionData.a;
+			const optionLabels = ["A", "B", "C", "D", "E"];
+			const correctOptionText = questionData.o[correctAnswer.charCodeAt(0) - 'A'.charCodeAt(0)];
+			updateOptionStyles(questionData, selectedAnswer);
+			if (!questionPanelModal.classList.contains('hidden')) {
+				renderQuestionPanel();
+			}
+			if (selectedAnswer === correctAnswer) {
+				const randomMsg = getRandomMessage(CORRECT_MESSAGES_KEY);
+				feedbackMessageEl.innerHTML = `
+                    <div class="text-lg mb-1">${randomMsg}</div>
+                    <div class="text-base">${getLangText('msg_correct_choice')}</div>
+                    <div class="text-sm mt-2 font-normal">Answer: ${correctAnswer}. ${correctOptionText}</div>
+                `;
+				feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-red-100', 'text-yellow-800', 'text-red-800');
+				feedbackMessageEl.classList.add('bg-green-100', 'text-green-800');
+			} else {
+				const randomMsg = getRandomMessage(INCORRECT_MESSAGES_KEY);
+				let explanation = questionData.e || "Review the grammatical rule associated with this topic to master it!";
+				feedbackMessageEl.innerHTML = `
+                    <div class="text-lg mb-1">${randomMsg}</div>
+                    <div class="text-base">${getLangText('msg_incorrect_choice', { label: correctAnswer, text: correctOptionText })}</div>
+                    <div class="text-sm mt-2 font-normal"> ${explanation}</div>
+                `;
+				feedbackMessageEl.classList.remove('hidden', 'bg-yellow-100', 'bg-green-100', 'text-yellow-800', 'text-green-800');
+				feedbackMessageEl.classList.add('bg-red-100', 'text-red-800');
+			}
+			feedbackMessageEl.classList.remove('hidden');
+		}
+		function formatTime(seconds) {
+			const minutes = Math.floor(seconds / 60);
+			const remainingSeconds = seconds % 60;
+			return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+		}
+		function updateTimerDisplay() {
+			if (!isTimerEnabled) return;
+			timerDisplay.textContent = `${formatTime(timeLeft)}${getLangText('quiz_status_time_remaining')}`;
+			const percentTimeRemaining = (timeLeft / TOTAL_TIME_SECONDS) * 100;
+			progressBar.style.width = `${percentTimeRemaining}%`;
+
+			progressBar.classList.remove('bg-teal-500', 'bg-orange-500', 'bg-red-500');
+
+			if (percentTimeRemaining > 60) {
+				progressBar.classList.add('bg-teal-500');
+			} else if (percentTimeRemaining > 30) {
+				progressBar.classList.add('bg-orange-500');
+			} else {
+				progressBar.classList.add('bg-red-500');
+			}
+
+			if (timeLeft <= 0 && !isTimeExpired) {
+				stopTimer();
+				isTimeExpired = true;
+				alertUser(getLangText('alert_time_expired_title'), getLangText('alert_time_expired_message'));
+				setTimeout(showResults, 1500);
+			}
+		}
+		function startTimer() {
+			isTimerEnabled = timeLimitToggle.checked;
+			if (!isTimerEnabled || isTimeExpired) {
+				quizStatusBar.classList.add('hidden');
+				return;
+			}
+			
+			if (pausedTimeLeft !== null) {
+				timeLeft = pausedTimeLeft;
+				pausedTimeLeft = null;
+			} else {
+				timeLeft = TOTAL_TIME_SECONDS;
+			}
+			
+			quizStatusBar.classList.remove('hidden');
+			updateTimerDisplay();
+			
+			if (timerInterval) {
+				clearInterval(timerInterval);
+			}
+			
+			timerInterval = setInterval(() => {
+				if (timeLeft > 0) {
+					timeLeft--;
+					updateTimerDisplay();
+				}
+			}, 1000);
+		}
+		
+		function pauseTimer() {
+			if (timerInterval) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+				pausedTimeLeft = timeLeft;
+			}
+		}
+		
+		function resumeTimer() {
+			if (isTimerEnabled && pausedTimeLeft !== null && !isTimeExpired) {
+				startTimer();
+			}
+		}
+		
+		function stopTimer() {
+			if (timerInterval) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+			}
+			pausedTimeLeft = null;
+		}
+		
+		function togglePanel(show) {
+			if (show) {
+				renderQuestionPanel();
+				questionPanelModal.classList.remove('hidden');
+			} else {
+				questionPanelModal.classList.add('hidden');
+			}
+		}
+		function renderQuestionPanel() {
+			questionPanelEl.innerHTML = '';
+			for (let i = 0; i < shuffledQuestions.length; i++) {
+				const qNum = i + 1;
+				const button = document.createElement('button');
+				let classes = 'q-index-button p-1 text-xs font-semibold rounded-lg shadow-sm w-full h-8 flex items-center justify-center border transition duration-100';
+				if (i === currentQuestionIndex) {
+					classes += ' bg-teal-600 text-white border-teal-700 ring-2 ring-teal-300 transform scale-105';
+				} else if (userAnswers[i] !== null) {
+					const isCorrect = userAnswers[i] === shuffledQuestions[i].a;
+					if (isCorrect) {
+						classes += ' bg-green-100 text-green-700 border-green-300 hover:bg-green-200';
+					} else {
+						classes += ' bg-red-100 text-red-700 border-red-300 hover:bg-red-200';
+					}
+				} else {
+					classes += ' bg-gray-100 text-gray-600 border-gray-300 hover:bg-gray-200';
+				}
+				button.className = classes;
+				button.textContent = qNum;
+				button.setAttribute('data-index', i);
+				button.onclick = () => jumpToQuestion(i);
+				questionPanelEl.appendChild(button);
+			}
+		}
+		function jumpToQuestion(index) {
+			currentQuestionIndex = index;
+			togglePanel(false);
+			renderQuestion();
+		}
+		const A_LEVEL_TESTS = [1];
+		const B_LEVEL_TESTS = [11];
+		const C_LEVEL_TESTS = [21];
+		const ALL_TEST_NUMBERS = A_LEVEL_TESTS.concat(B_LEVEL_TESTS).concat(C_LEVEL_TESTS);
+		const CEFR_LEVEL_MAP = {
+			'A1 & A2': A_LEVEL_TESTS,
+			'B1 & B2': B_LEVEL_TESTS,
+			'C1 & C2': C_LEVEL_TESTS,
+		};
+		const CEFR_DESCRIPTIONS = {
+			'A1 & A2': {
+				en: 'This **Beginner/Elementary** test covers Simple Tenses, Articles, and basic Prepositions. It is Test 1 from the full set.',
+				tr: 'Bu **Başlangıç/Temel Seviye** testi, Basit Zamanlar, Tanımlıklar ve temel Edatları kapsar. Tam setin 1. Testidir.',
+			},
+			'B1 & B2': {
+				en: 'This **Intermediate/Upper-Intermediate** test covers Perfect Tenses, Conditionals, Reported Speech, and Relative Clauses. It is Test 11 from the full set.',
+				tr: 'Bu **Orta/Üst-Orta Seviye** testi, Tamamlanmış Zamanlar, Koşul Cümleleri, Aktarma Cümleleri ve İlgili Yan Cümleleri kapsar. Tam setin 11. Testidir.',
+			},
+			'C1 & C2': {
+				en: 'This **Advanced/Proficiency** test covers Inversion, Subjunctive, Nominalization, and Advanced Collocations. It is Test 21 from the full set.',
+				tr: 'Bu **İleri/Yeterlilik Seviyesi** testi, Devrik Cümleler, Dilek Kipi, İsimleştirme ve İleri Düzey Sözcük Öbeklerini kapsar. Tam setin 21. Testidir.',
+			},
+		};
+		function getLevelColor(levelTitle) {
+			if (levelTitle.startsWith('A')) return 'bg-teal-600 hover:bg-teal-700';
+			if (levelTitle.startsWith('B')) return 'bg-blue-600 hover:bg-blue-700';
+			return 'bg-purple-600 hover:bg-purple-700';
+		}
+		function showLevelModal(levelTitle) {
+			const firstNameInput = document.getElementById('firstName').value.trim();
+			const surnameInput = document.getElementById('surname').value.trim();
+			if (!firstNameInput || !surnameInput) {
+				startFeedbackMessageEl.textContent = getLangText('feedback_enter_details');
+				startFeedbackMessageEl.classList.remove('hidden');
+				startFeedbackMessageEl.classList.add('bg-yellow-100', 'text-yellow-800');
+				setTimeout(() => startFeedbackMessageEl.classList.add('hidden'), 3000);
+				return;
+			}
+			const testNumbers = CEFR_LEVEL_MAP[levelTitle];
+			const buttonColorClass = getLevelColor(levelTitle);
+			modalLevelTitle.textContent = `${levelTitle} Test (Test ${testNumbers[0]})`;
+			modalLevelDescription.innerHTML = CEFR_DESCRIPTIONS[levelTitle][currentLang] || CEFR_DESCRIPTIONS[levelTitle].en;
+			cefrTestSelectionContainer.innerHTML = '';
+			const i = testNumbers[0];
+			const button = document.createElement('button');
+			button.textContent = `${getLangText('home_start_button').split('!')[0].trim()} ${i}`;
+			button.onclick = () => {
+				userName = firstNameInput.charAt(0).toUpperCase() + firstNameInput.slice(1).toLowerCase();
+				userSurname = surnameInput.charAt(0).toUpperCase() + surnameInput.slice(1).toLowerCase();
+				startTest(i);
+				hideLevelModal();
+			};
+			button.className = `text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out ${buttonColorClass}`;
+			cefrTestSelectionContainer.appendChild(button);
+			levelSelectionModal.classList.remove('hidden');
+		}
+		function hideLevelModal() {
+			levelSelectionModal.classList.add('hidden');
+		}
+		function loadHistory() {
+			const storedHistory = localStorage.getItem(HISTORY_STORAGE_KEY);
+			if (storedHistory) {
+				quizHistory = JSON.parse(storedHistory);
+			} else {
+				quizHistory = [];
+			}
+		}
+		function saveHistory() {
+			localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(quizHistory));
+		}
+		function addHistoryEntry(testNumber, score, percentage, timeTaken, timeExpired) {
+			const historyEntry = {
+				id: Date.now(),
+				firstName: userName,
+				surname: userSurname,
+				testNumber: testNumber,
+				score: score,
+				totalQuestions: shuffledQuestions.length,
+				percentage: percentage,
+				dateTime: new Date().toISOString(),
+				timeLimitEnabled: isTimerEnabled,
+				timeExpired: timeExpired,
+				timeTaken: timeTaken,
+				questions: shuffledQuestions,
+				userAnswers: userAnswers
+			};
+			quizHistory.unshift(historyEntry);
+			saveHistory();
+			lastHistoryId = historyEntry.id;
+		}
+		function renderHistory() {
+			loadHistory();
+			const filterValue = historyFilter.value;
+			let filteredHistory = quizHistory;
+			if (filterValue !== 'all') {
+				filteredHistory = quizHistory.filter(entry => entry.testNumber == filterValue);
+			}
+			if (filteredHistory.length === 0) {
+				historyContainer.innerHTML = `
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-12 h-12 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p>${getLangText('history_no_entries')}</p>
+                        <p class="text-sm mt-2">${getLangText('history_complete_test')}</p>
+                    </div>
+                `;
+				return;
+			}
+			let htmlContent = '';
+			filteredHistory.forEach(entry => {
+				const date = new Date(entry.dateTime);
+				const formattedDate = date.toLocaleDateString(currentLang === 'tr' ? 'tr-TR' : 'en-US');
+				const formattedTime = date.toLocaleTimeString(currentLang === 'tr' ? 'tr-TR' : 'en-US', {
+					hour: '2-digit',
+					minute: '2-digit'
+				});
+				const entryId = entry.id;
+				const radius = 20;
+				const circumference = 2 * Math.PI * radius;
+				const offset = circumference - (entry.percentage / 100) * circumference;
+				const color = entry.percentage >= 70 ? '#10b981' : entry.percentage >= 50 ? '#f59e0b' : '#ef4444';
+				const bgGray = '#e5e7eb';
+				htmlContent += `
+                    <div class="history-item border border-gray-200 rounded-lg p-4 mb-3 bg-white shadow-sm hover:bg-gray-50">
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="relative w-12 h-12 mr-4">
+                                    <svg class="progress-ring w-12 h-12" width="48" height="48">
+                                        <circle
+                                            class="progress-ring-circle"
+                                            stroke="${color}"
+                                            stroke-width="4"
+                                            fill="transparent"
+                                            r="${radius}"
+                                            cx="24"
+                                            cy="24"
+                                            style="stroke-dasharray: ${circumference} ${circumference}; stroke-dashoffset: ${offset};"
+                                        />
+                                        <circle
+                                            class=""
+                                            stroke="${bgGray}"
+                                            stroke-width="4"
+                                            fill="transparent"
+                                            r="${radius}"
+                                            cx="24"
+											cy="24"
+                                            stroke-dasharray="${circumference} ${circumference}"
+                                            stroke-dashoffset="0"
+                                        />
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center text-xs font-bold">
+                                        ${Math.round(entry.percentage)}%
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800">${getLangText('test_number_1').replace('Test 1', `Test ${entry.testNumber}`)}</div>
+                                    <div class="text-sm text-gray-600">${entry.firstName} ${entry.surname}</div>
+                                    <div class="text-xs text-gray-500">${formattedDate} ${formattedTime}</div>
+                                </div>
+                            </div>
+                            <div class="text-right flex flex-col space-y-2">
+                                <div class="text-lg font-bold text-gray-800">${entry.score}/${entry.totalQuestions}</div>
+                                <div class="text-sm text-gray-600">
+                                    ${entry.timeLimitEnabled ?
+										(entry.timeExpired ?
+											`<span class="text-red-500">${getLangText('history_time_expired')}</span>` :
+											`${getLangText('history_time')} ${entry.timeTaken}`) :
+										getLangText('history_no_time_limit')}
+                                </div>
+								<button onclick="showDetailedReview(${entryId})" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1 rounded font-semibold transition duration-150">
+									${getLangText('history_view_details')}
+								</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+			});
+			historyContainer.innerHTML = htmlContent;
+			updateHistoryStats(filteredHistory);
+		}
+		function updateHistoryStats(history) {
+			if (history.length === 0) {
+				historyStats.innerHTML = '';
+				return;
+			}
+			const totalTests = history.length;
+			const avgScore = history.reduce((sum, entry) => sum + entry.percentage, 0) / totalTests;
+			const bestScore = Math.max(...history.map(entry => entry.percentage));
+			const testsCompleted = [...new Set(history.map(entry => entry.testNumber))].length;
+			let completedText = getLangText('history_stats_completed');
+			if (currentLang === 'en') {
+				completedText = completedText.replace('{s}', totalTests !== 1 ? 's' : '');
+			} else {
+				completedText = totalTests > 1 ? `${totalTests} ${completedText}` : `1 ${completedText}`;
+			}
+			historyStats.innerHTML = `
+                <div class="text-sm text-gray-600">
+                    <span class="font-semibold">${totalTests}</span> ${completedText} |
+                    ${getLangText('history_stats_avg')}: <span class="font-semibold">${avgScore.toFixed(1)}%</span> |
+                    ${getLangText('history_stats_best')}: <span class="font-semibold">${bestScore.toFixed(1)}%</span> |
+                    ${getLangText('history_stats_tests')}: <span class="font-semibold">${testsCompleted}/${TOTAL_TESTS}</span>
+                </div>
+            `;
+		}
+		function clearHistory() {
+			const modal = document.createElement('div');
+			modal.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
+			modal.innerHTML = `
+                <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
+                    <h4 class="text-xl font-bold mb-2 text-red-600">${getLangText('alert_confirm_deletion_title')}</h4>
+                    <p class="text-gray-600 mb-4">${getLangText('alert_confirm_deletion_message')}</p>
+                    <div class="flex justify-center space-x-4">
+                        <button id="confirmClear" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150">
+                            ${getLangText('alert_yes_clear')}
+                        </button>
+                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-150">
+                            ${getLangText('alert_cancel')}
+                        </button>
+                    </div>
+                </div>
+            `;
+			document.body.appendChild(modal);
+			document.getElementById('confirmClear').onclick = () => {
+				quizHistory = [];
+				saveHistory();
+				renderHistory();
+				modal.remove();
+			};
+		}
+		function toggleHistoryModal(show) {
+			if (show) {
+				renderHistory();
+				historyModal.classList.remove('hidden');
+			} else {
+				historyModal.classList.add('hidden');
+			}
+		}
+		function toggleReviewDetailsModal(show) {
+			if (show) {
+				reviewDetailsModal.classList.remove('hidden');
+				historyModal.classList.add('hidden');
+			} else {
+				reviewDetailsModal.classList.add('hidden');
+				historyModal.classList.remove('hidden');
+			}
+		}
+		function showDetailedReview(entryId) {
+			const entry = quizHistory.find(e => e.id === entryId);
+			if (!entry || !entry.questions || !entry.userAnswers) {
+				alertUser(getLangText('alert_data_error_title'), getLangText('alert_data_error_message'));
+				return;
+			}
+			reviewModalTitle.textContent = `${getLangText('modal_review_title')}: Test ${entry.testNumber} (${entry.score}/${entry.totalQuestions} - ${entry.percentage.toFixed(2)}%)`;
+			renderDetailedHistoryTable(entry.questions, entry.userAnswers);
+			reviewDetailsModal.classList.remove('hidden');
+		}
+		function renderDetailedHistoryTable(questions, userAnswersArray) {
+			let htmlContent = `
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50 summary-table-header">
+                        <tr>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-10">${getLangText('summary_q')}</th>
+                            <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">${getLangText('results_review_header')}</th>
+                            <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-24">${getLangText('summary_result')}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+            `;
+			questions.forEach((qData, index) => {
+				const qNum = index + 1;
+				const userAnswerLabel = userAnswersArray[index];
+				const correctAnswerLabel = qData.a;
+				const isCorrect = userAnswerLabel === correctAnswerLabel;
+				const skippedText = getLangText('summary_skipped');
+				const selectedOptionText = userAnswerLabel ?
+					qData.o[userAnswerLabel.charCodeAt(0) - 'A'.charCodeAt(0)] :
+					`<span class="text-red-500 font-semibold">${skippedText}</span>`;
+				const correctOptionText = qData.o[correctAnswerLabel.charCodeAt(0) - 'A'.charCodeAt(0)];
+				const correctnessIcon = isCorrect ?
+					`<span class="text-green-600 font-bold text-2xl" title="${getLangText('msg_correct')[0]}">\u2713</span>` :
+					`<span class="text-red-600 font-bold text-2xl" title="${getLangText('msg_incorrect')[0]}">\u2717</span>`;
+				const rowBg = isCorrect ? 'bg-green-50' : (userAnswerLabel ? 'bg-red-50' : 'bg-yellow-50');
+				htmlContent += `
+                    <tr class="${rowBg} summary-table-row">
+                        <td class="px-3 py-3 text-sm font-medium text-gray-900 summary-table-cell border-none sm:border-b sm:border-gray-200">
+                            <span class="font-bold sm:hidden">${getLangText('summary_q')}.</span> ${qNum}
+                        </td>
+                        <td class="px-3 py-3 text-sm text-gray-700 summary-table-cell sm:table-cell border-none sm:border-b sm:border-gray-200">
+                            <div class="font-bold text-gray-800">${qData.q}</div>
+                            <div class="mt-1 text-xs text-gray-600">
+                                <span class="font-bold text-gray-800">${getLangText('summary_your_choice', { label: userAnswerLabel || '-' })}</span> ${selectedOptionText}
+                            </div>
+                            ${!isCorrect ?
+								`<div class="mt-1 text-xs text-green-700">
+                                    <span class="font-bold text-green-800">${getLangText('summary_correct', { label: correctAnswerLabel })}</span> ${correctOptionText}
+                                </div>
+                                <div class="mt-2 p-2 text-xs bg-white rounded-lg text-gray-700 border border-gray-200">
+                                    <span class="font-bold">${getLangText('summary_explanation')}:</span> ${qData.e}
+                                </div>`
+								: ''
+							}
+                        </td>
+                        <td class="px-3 py-3 text-center summary-table-cell w-24 sm:w-auto border-none sm:border-b sm:border-gray-200">
+                            <div class="sm:hidden text-xs font-bold text-gray-500">${getLangText('summary_result')}:</div>
+                            ${correctnessIcon}
+                        </td>
+                    </tr>
+                `;
+			});
+			htmlContent += `
+                    </tbody>
+                </table>
+            `;
+			reviewDetailsContainer.innerHTML = htmlContent;
+		}
+		function renderTestButtons() {
+			historyFilter.innerHTML = `<option value="all">${getLangText('modal_history_all_tests')}</option>`;
+			for (let i = 1; i <= TOTAL_TESTS; i++) {
+				const testNum = ALL_TEST_NUMBERS[i - 1];
+				const option = document.createElement('option');
+				option.value = testNum;
+				option.textContent = `${getLangText('test_number_1').replace('Test 1', 'Test')}` + ` ${testNum}`;
+				historyFilter.appendChild(option);
+			}
+		}
+		function restartCurrentQuiz() {
+			if (selectedTestNumber) {
+				const confirmRestart = document.createElement('div');
+				confirmRestart.className = 'fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4';
+				confirmRestart.innerHTML = `
+					<div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-sm text-center">
+						<h4 class="text-xl font-bold mb-2 text-red-600">Confirm Restart</h4>
+						<p class="text-gray-600 mb-4">Are you sure you want to restart Test ${selectedTestNumber}? All current answers will be lost.</p>
+						<div class="flex justify-center space-x-4">
+							<button id="confirmRestartButton" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150">
+								Yes, Restart
+							</button>
+							<button onclick="this.closest('.fixed').remove()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-lg transition duration-150">
+								Cancel
+							</button>
+						</div>
+					</div>
+				`;
+				document.body.appendChild(confirmRestart);
+				document.getElementById('confirmRestartButton').onclick = () => {
+					confirmRestart.remove();
+					startTest(selectedTestNumber);
+				};
+			} else {
+				resetQuiz();
+			}
+		}
+
+		function startTest(testNumber) {
+			selectedTestNumber = testNumber;
+			currentQuestionIndex = 0;
+			let startIndex;
+			if (testNumber === 1) startIndex = 0;
+			else if (testNumber === 11) startIndex = 10;
+			else if (testNumber === 21) startIndex = 20;
+			else {
+				alertUser(getLangText('alert_data_error_title'), getLangText('alert_data_error_message'));
+				return;
+			}
+			const endIndex = startIndex + TEST_SIZE;
+			if (startIndex < 0 || endIndex > TOTAL_QUESTIONS) {
+				alertUser(getLangText('alert_data_error_title'), getLangText('alert_data_error_message'));
+				return;
+			}
+			const testQuestions = QUESTION_BANK.slice(startIndex, endIndex);
+			shuffledQuestions = shuffleArray(testQuestions);
+			userAnswers = Array(shuffledQuestions.length).fill(null);
+			score = 0;
+			quizTitleEl.textContent = `${getLangText('quiz_header_title').replace('English Quizzes', 'Test')} - Test ${testNumber}`;
+			
+			pausedTimeLeft = null;
+			isTimeExpired = false;
+			startTimer();
+			
+			startScreen.classList.add('hidden');
+			resultsScreen.classList.add('hidden');
+			quizScreen.classList.remove('hidden');
+			renderQuestion();
+		}
+		function renderQuestion() {
+			if (isTimeExpired) {
+				return;
+			}
+			calculateScore();
+			quizScoreEl.textContent = getLangText('quiz_score', { score: score });
+			feedbackMessageEl.classList.add('hidden');
+			const currentQ = shuffledQuestions[currentQuestionIndex];
+			const selectedAnswer = userAnswers[currentQuestionIndex];
+			const currentTestLength = shuffledQuestions.length;
+			prevButton.disabled = currentQuestionIndex === 0;
+			nextButton.disabled = false;
+			questionCounterEl.textContent = getLangText('quiz_counter', { current: currentQuestionIndex + 1, total: currentTestLength });
+			currentQuestionEl.textContent = currentQ.q;
+			optionsContainer.innerHTML = '';
+			const optionLabels = ["A", "B", "C", "D", "E"];
+			currentQ.o.forEach((optionText, index) => {
+				const label = optionLabels[index];
+				const button = document.createElement('button');
+				button.className = 'option-button w-full text-left bg-white p-3 rounded-lg border border-gray-300 hover:bg-teal-50 hover:border-teal-500 text-gray-800 font-medium disabled:opacity-75';
+				button.setAttribute('data-answer', label);
+				button.innerHTML = `<span class="font-bold mr-2 text-teal-600">${label}.</span> ${optionText}`;
+				button.onclick = () => submitAnswer(label, currentQ);
+				optionsContainer.appendChild(button);
+			});
+			if (currentQuestionIndex === currentTestLength - 1) {
+				nextButton.textContent = getLangText('quiz_finish_button');
+				nextButton.classList.remove('bg-teal-600', 'hover:bg-teal-700');
+				nextButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
+			} else {
+				nextButton.textContent = getLangText('quiz_next_button');
+				nextButton.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+				nextButton.classList.add('bg-teal-600', 'hover:bg-teal-700');
+			}
+			if (selectedAnswer !== null) {
+				displayAnswerFeedback(currentQ, selectedAnswer);
+			} else {
+				updateOptionStyles(currentQ, selectedAnswer);
+			}
+		}
+		function submitAnswer(selectedAnswer, questionData) {
+			if (isTimeExpired) {
+				alertUser(getLangText('alert_time_expired_title'), getLangText('alert_time_expired_no_submit'));
+				return;
+			}
+			userAnswers[currentQuestionIndex] = selectedAnswer;
+			displayAnswerFeedback(questionData, selectedAnswer);
+			calculateScore();
+			quizScoreEl.textContent = getLangText('quiz_score', { score: score });
+			const currentTestLength = shuffledQuestions.length;
+			if (currentQuestionIndex === currentTestLength - 1) {
+				nextButton.textContent = getLangText('quiz_finish_button');
+			}
+		}
+		function nextQuestion() {
+			if (isTimeExpired) {
+				return;
+			}
+			const currentTestLength = shuffledQuestions.length;
+			if (currentQuestionIndex < currentTestLength - 1) {
+				currentQuestionIndex++;
+				renderQuestion();
+			} else if (currentQuestionIndex === currentTestLength - 1) {
+				showResults();
+			}
+		}
+		function previousQuestion() {
+			if (currentQuestionIndex > 0) {
+				currentQuestionIndex--;
+				renderQuestion();
+			}
+		}
+		function renderSummaryTable() {
+			reviewDetailsContainer.innerHTML = '';
+			renderDetailedHistoryTable(shuffledQuestions, userAnswers);
+		}
+		function showResults() {
+			stopTimer();
+			const finalScoreValue = calculateScore();
+			const currentTestLength = shuffledQuestions.length;
+			const percentage = (finalScoreValue / currentTestLength) * 100;
+			userGreetingEl.textContent = `${userName} ${userSurname}, Test ${selectedTestNumber} ${getLangText('results_title').toLowerCase().replace('test completed', '').trim()}!`;
+			
+			let timeTakenSeconds = TOTAL_TIME_SECONDS;
+			if (isTimerEnabled) {
+				if (!isTimeExpired && pausedTimeLeft !== null) {
+					timeTakenSeconds = TOTAL_TIME_SECONDS - pausedTimeLeft; 
+				} else if (!isTimeExpired && timerInterval === null) {
+					timeTakenSeconds = TOTAL_TIME_SECONDS - timeLeft;
+				} else if (isTimeExpired) {
+					timeTakenSeconds = TOTAL_TIME_SECONDS;
+				} else {
+					timeTakenSeconds = TOTAL_TIME_SECONDS - timeLeft;
+				}
+			} else {
+				timeTakenSeconds = null;
+			}
+			
+			let timeStatus;
+			if (isTimerEnabled) {
+				if (isTimeExpired) {
+					timeStatus = `<span class="text-red-600">${getLangText('results_time_expired')}</span>`;
+				} else {
+					timeStatus = getLangText('results_completed_in', { time: formatTime(timeTakenSeconds) });
+				}
+			} else {
+				timeStatus = getLangText('results_no_limit_set');
+			}
+			
+			finalScoreEl.innerHTML = `${finalScoreValue} / ${currentTestLength} <div class="text-xs font-normal text-gray-600">${timeStatus}</div>`;
+			finalPercentageEl.textContent = `${percentage.toFixed(2)}%`;
+			
+			addHistoryEntry(
+				selectedTestNumber,
+				finalScoreValue,
+				percentage,
+				isTimerEnabled ? formatTime(timeTakenSeconds) : 'N/A',
+				isTimeExpired
+			);
+			
+			quizScreen.classList.add('hidden');
+			resultsScreen.classList.remove('hidden');
+		}
+		function resetQuiz() {
+			stopTimer();
+			const user = getLoggedInUser();
+			if (user) {
+				document.getElementById('firstName').value = user.firstName;
+				document.getElementById('surname').value = user.surname;
+			} else {
+				document.getElementById('firstName').value = '';
+				document.getElementById('surname').value = '';
+			}
+			quizTitleEl.textContent = getLangText('quiz_header_title');
+			startScreen.classList.remove('hidden');
+			quizScreen.classList.add('hidden');
+			resultsScreen.classList.add('hidden');
+			renderTestButtons();
+		}
+		document.addEventListener('DOMContentLoaded', () => {
+			const storedLang = localStorage.getItem('quizAppLang');
+			currentLang = (storedLang && langData[storedLang]) ? storedLang : 'en';
+			
+			const mainMenu = document.getElementById('mainMenu');
+			const mobileMenuItems = document.getElementById('mobileMenuItems');
+			if (mainMenu && mobileMenuItems) {
+				const items = Array.from(mainMenu.children).map(li => li.cloneNode(true));
+				items.forEach(item => {
+					item.classList.remove('flex', 'items-center', 'justify-end');
+					item.querySelector('a')?.addEventListener('click', () => {
+						if (!mobileMenu.classList.contains('hidden')) {
+							toggleMobileMenu();
+						}
+					});
+					mobileMenuItems.appendChild(item);
+				});
+			}
+
+			applyTranslations();
+			checkLoginStatus();
+			showSection('home', document.querySelector('[data-section="home"]'));
+			renderTestButtons();
+			loadHistory();
+			viewHistoryButton.addEventListener('click', () => toggleHistoryModal(true));
+			viewHistoryFromResults.addEventListener('click', () => toggleHistoryModal(true));
+			clearHistoryButton.addEventListener('click', clearHistory);
+			historyFilter.addEventListener('change', renderHistory);
+		});
+	</script>
+</body>
+</html>
