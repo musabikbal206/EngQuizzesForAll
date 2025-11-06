@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EngQuizzesForAll - Master Your English Grammar</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+</head>
+<body data-lang="en">
+    <div class="bee-page-container">
+        <header class="bee-row bee-row-1">
+            <div class="bee-row-content max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between w-full">
+                    <!-- Logo -->
+                    <div class="bee-logo text-2xl font-extrabold text-gray-800 tracking-tight cursor-pointer" onclick="showSection('home', document.querySelector('[data-section=\'home\']'))">
+                        Eng<span class="text-teal-500">Quizzes</span>
+                    </div>
+                    <!-- Desktop Menu -->
+                    <div id="desktopNav" class="hidden sm:flex items-center justify-end">
+                        <div class="bee-block bee-menu mr-4">
+                            <nav class="bee-menu">
+                                <ul id="mainMenu" class="flex items-center">
+                                    <li><a href="#" target="_self" data-i18n="nav_home" onclick="showSection('home', this)" data-section="home" class="nav-active">HOME</a></li>
+                                    <li><a href="#" target="_self" data-i18n="nav_about" onclick="showSection('about', this)" data-section="about">ABOUT</a></li>
+                                    <li><a href="#" target="_self" data-i18n="nav_quiz" onclick="showSection('quiz', this)" data-section="quiz">TEST YOUR ENGLISH</a></li>
+                                    <li><a href="#" target="_self" data-i18n="nav_support" onclick="showSection('support', this)" data-section="support">SUPPORT US</a></li>
+                                    <li id="navRegisterLink"><a href="#" target="_self" data-i18n="nav_register" onclick="showSection('register', this)" data-section="register">REGISTER</a></li>
+                                    <li id="navAuthLink"><a href="#" target="_self" data-i18n="nav_login" onclick="handleAuthClick(this)" data-section="login-logout">LOGIN</a></li>
+                                    <li>
+                                        <button id="languageToggle" onclick="toggleLanguage()" class="ml-4 px-3 py-1.5 text-sm font-bold rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition duration-150 ease-in-out">Türkçe</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuButton" class="sm:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-150" onclick="toggleMobileMenu()">
+                        <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                        <svg id="closeIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobileMenu" class="hidden sm:hidden w-full border-t border-gray-100 bg-white">
+                <nav class="py-2">
+                    <ul id="mobileMenuItems" class="flex flex-col space-y-2 px-4 pb-2 text-center"></ul>
+                </nav>
+            </div>
+        </header>
+        
+        <main class="main-content-area w-full max-w-7xl mx-auto">
+            <!-- Home Section -->
+            <section id="home-section" class="content-section p-4 md:p-8">
+                <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+                    <h2 class="text-4xl font-extrabold text-gray-800 mb-4 gradient-header bg-clip-text text-transparent inline-block" data-i18n="home_title">Welcome to EngQuizzesForAll!</h2>
+                    <p class="text-xl text-gray-600 mb-6" data-i18n="home_subtitle">The best place to sharpen your English grammar skills through quick, targeted, and fun quizzes. Now featuring **3 distinct tests**!</p>
+                    <div class="grid md:grid-cols-3 gap-6 mt-8">
+                        <div class="bg-teal-50 p-6 rounded-xl border-l-4 border-teal-500 shadow-md">
+                            <h3 class="text-2xl font-semibold text-teal-700 mb-3" data-i18n="home_feature1_title">Targeted Practice</h3>
+                            <p class="text-gray-700" data-i18n="home_feature1_desc">Choose from 3 distinct tests, each focusing on different aspects of grammar, from basic tenses to advanced conditionals and phrasal verbs.</p>
+                        </div>
+                        <div class="bg-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500 shadow-md">
+                            <h3 class="text-2xl font-semibold text-indigo-700 mb-3" data-i18n="home_feature2_title">Challenge Mode</h3>
+                            <p class="text-gray-700" data-i18n="home_feature2_desc">Test your speed and accuracy with our optional 2-minute time limit. See your results and track your progress over time with the detailed history.</p>
+                        </div>
+                        <div class="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500 shadow-md">
+                            <h3 class="text-2xl font-semibold text-purple-700 mb-3" data-i18n="home_feature3_title">Detailed Review</h3>
+                            <p class="text-gray-700" data-i18n="home_feature3_desc">After each quiz, get instant feedback, including explanations for every correct answer, turning every mistake into a learning opportunity.</p>
+                        </div>
+                    </div>
+                    <div class="mt-10 text-center">
+                        <button class="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-lg shadow-xl transition duration-300 ease-in-out transform hover:scale-105" onclick="showSection('quiz', document.querySelector('[data-section=\'quiz\']'))" data-i18n="home_start_button">Start Your First Test Now!</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Login Section -->
+            <section id="login-section" class="content-section hidden p-4 md:p-8 flex justify-center">
+                <div class="auth-card w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 text-center" data-i18n="login_title">User Login</h2>
+                    <form id="loginForm" onsubmit="loginUser(event)">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700" for="loginEmail" data-i18n="label_email">Email Address</label>
+                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="loginEmail" placeholder="you@example.com" required="" type="email" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700" for="loginPassword" data-i18n="label_password">Password</label>
+                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="loginPassword" data-i18n-placeholder="placeholder_min_chars" placeholder="Minimum 6 characters" required="" type="password" minlength="6" />
+                            </div>
+                        </div>
+                        <div id="loginFeedback" class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden"></div>
+                        <button type="submit" class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" data-i18n="login_button">Log In</button>
+                        <p class="mt-4 text-center text-sm text-gray-600" data-i18n-html="login_no_account">Don't have an account? <a href="#" onclick="showSection('register', document.getElementById('navRegisterLink').querySelector('a'))" class="text-teal-600 hover:text-teal-700 font-semibold" data-i18n="login_register_link">Register here</a></p>
+                    </form>
+                </div>
+            </section>
+            
+            <!-- Register Section -->
+            <section id="register-section" class="content-section hidden p-4 md:p-8 flex justify-center">
+                <div class="auth-card w-full max-w-md bg-white p-6 md:p-8 rounded-xl shadow-lg border border-gray-100">
+                    <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-2 text-center" data-i18n="register_title">Create Account</h2>
+                    <form id="registerForm" onsubmit="registerUser(event)">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700" for="regEmail" data-i18n="label_email">Email Address</label>
+                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regEmail" placeholder="you@example.com" required="" type="email" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700" for="regPassword" data-i18n="label_password">Password</label>
+                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regPassword" data-i18n-placeholder="placeholder_min_chars" placeholder="Minimum 6 characters" required="" type="password" minlength="6" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700" for="regName" data-i18n="label_first_name">First Name</label>
+                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regName" placeholder="John" required="" type="text" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700" for="regSurname" data-i18n="label_surname">Surname</label>
+                                <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="regSurname" placeholder="Doe" required="" type="text" />
+                            </div>
+                        </div>
+                        <div id="registerFeedback" class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden"></div>
+                        <button type="submit" class="mt-6 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" data-i18n="register_button">Register Account</button>
+                    </form>
+                </div>
+            </section>
+            
+            <!-- About Section -->
+            <section id="about-section" class="content-section hidden p-4 md:p-8">
+                <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100">
+                    <h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2" data-i18n="about_title">About EngQuizzesForAll</h2>
+                    <p class="text-lg text-gray-600 mb-6" data-i18n="about_intro">We believe that mastering English grammar shouldn't be boring. Our platform was created to provide a fast, efficient, and engaging way for students and professionals to test their knowledge and identify areas for improvement.</p>
+                    <h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4" data-i18n="about_mission_title">Our Mission</h3>
+                    <p class="text-gray-700 mb-4" data-i18n="about_mission_desc">Our mission is simple: to make complex English grammar rules accessible to everyone. We achieve this by providing 30 carefully curated questions covering the most common and challenging aspects of the language, from basic tenses and prepositions to advanced conditionals and inversions.</p>
+                    <h3 class="text-2xl font-semibold text-teal-700 mt-8 mb-4" data-i18n="about_creator_title">The Creator</h3>
+                    <div class="flex items-start space-x-6 bg-gray-50 p-6 rounded-lg border">
+                        <img class="w-24 h-24 rounded-full object-cover shadow-md" src="https://placehold.co/96x96/6ee7b7/065f46?text=MS" data-i18n-alt="about_creator_alt" alt="Musab İKBAL SUBAŞI">
+                        <div>
+                            <p class="text-xl font-bold text-gray-900">Musab İKBAL SUBAŞI</p>
+                            <p class="text-teal-600 text-sm mb-2" data-i18n="about_creator_role">English Language Teacher</p>
+                            <p class="text-gray-700 text-sm" data-i18n="about_creator_quote">"This project was born out of a desire to create a clean, responsive, and distraction-free environment for learning. The focus is on immediate feedback and clear explanations to ensure real learning happens with every question."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Quiz Section -->
+            <section id="quiz-section" class="content-section hidden">
+                <div class="quiz-container p-4">
+                    <div class="quiz-card w-full max-w-xl bg-white rounded-xl overflow-hidden shadow-2xl">
+                        <div class="gradient-header text-white p-6 md:p-8">
+                            <h1 class="text-3xl font-bold tracking-tight" id="quizTitle" data-i18n="quiz_header_title">English Quizzes</h1>
+                            <p class="mt-1 text-teal-100" data-i18n="quiz_header_subtitle">Select your proficiency level to challenge your grammar knowledge.</p>
+                        </div>
+                        <div class="p-6 md:p-8" id="startScreen">
+                            <div id="quizStartGreeting" class="text-xl font-bold text-gray-800 mb-4"></div>
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-xl font-semibold text-gray-800" data-i18n="quiz_start_confirm_details">Please confirm your details.</h2>
+                                <button class="bg-purple-600 hover:bg-purple-700 text-white text-sm px-3 py-2 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out" id="viewHistoryButton" data-i18n="quiz_start_view_history">View History</button>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700" for="firstName" data-i18n="label_first_name">First Name</label>
+                                    <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="firstName" placeholder="John" required="" type="text" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700" for="surname" data-i18n="label_surname">Surname</label>
+                                    <input class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="surname" placeholder="DOE" required="" type="text" />
+                                </div>
+                                <div class="pt-2 flex items-center">
+                                    <input class="h-4 w-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500" id="timeLimitToggle" type="checkbox" />
+                                    <label class="ml-2 block text-sm font-medium text-gray-700" for="timeLimitToggle" data-i18n="quiz_start_enable_timer">Enable 2-Minute Time Limit (Challenge Mode)</label>
+                                </div>
+                                <!-- Review Mode Toggle -->
+                                <div class="pt-2 flex items-center">
+                                    <input class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" id="reviewModeToggle" type="checkbox" />
+                                    <label class="ml-2 block text-sm font-medium text-gray-700" for="reviewModeToggle" data-i18n="quiz_start_review_mode">Enable Review Mode (No immediate feedback)</label>
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4 mt-8" data-i18n="quiz_start_select_level">Select Your CEFR Level</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="cefrSelectionContainer">
+                                <div class="cefr-button cefr-button-A" onclick="showLevelModal('A1 & A2')">
+                                    <div class="text-3xl font-extrabold text-teal-600">A1 & A2</div>
+                                    <div class="text-sm font-semibold text-teal-700 mt-1" data-i18n="level_a_desc">Beginner/Elementary</div>
+                                    <div class="text-xs text-gray-600 mt-2" data-i18n="test_number_1">Tests 1-10</div>
+                                </div>
+                                <div class="cefr-button cefr-button-B" onclick="showLevelModal('B1 & B2')">
+                                    <div class="text-3xl font-extrabold text-blue-600">B1 & B2</div>
+                                    <div class="text-sm font-semibold text-blue-700 mt-1" data-i18n="level_b_desc">Intermediate/Upper-Intermediate</div>
+                                    <div class="text-xs text-gray-600 mt-2" data-i18n="test_number_11">Tests 11-20</div>
+                                </div>
+                                <div class="cefr-button cefr-button-C" onclick="showLevelModal('C1 & C2')">
+                                    <div class="text-3xl font-extrabold text-purple-600">C1 & C2</div>
+                                    <div class="text-sm font-semibold text-purple-700 mt-1" data-i18n="level_c_desc">Advanced/Proficiency</div>
+                                    <div class="text-xs text-gray-600 mt-2" data-i18n="test_number_21">Tests 21-30</div>
+                                </div>
+                            </div>
+                            <div class="mt-4 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden bg-yellow-100 text-yellow-800" id="startFeedbackMessage"></div>
+                        </div>
+                        <div class="p-6 md:p-8 hidden" id="quizScreen">
+                            <div class="mb-4 hidden" id="quizStatusBar">
+                                <div class="text-sm font-medium text-gray-700 mb-1 flex justify-between">
+                                    <span class="font-bold" id="timerDisplay" data-i18n-prefix="quiz_status_time_remaining">02:00 Remaining</span>
+                                    <!-- Quit Test Button -->
+                                    <button class="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded font-semibold shadow-md transition duration-150 ease-in-out" onclick="quitTest()" data-i18n="quiz_quit_button">Quit Test</button>
+                                </div>
+                                <div class="h-2 rounded-full overflow-hidden bg-gray-200">
+                                    <div class="h-2 transition-all duration-300 ease-linear" id="progressBar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center mb-6">
+                                <div class="text-lg font-medium text-teal-600" id="questionCounter" data-i18n-prefix="quiz_counter">Question 1 of 10</div>
+                                <button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded-lg font-semibold shadow-md transition duration-150 ease-in-out" onclick="togglePanel(true)" data-i18n="quiz_overview_button">Question Overview</button>
+                                <div class="text-lg font-medium text-gray-500" id="quizScore" data-i18n-prefix="quiz_score">Score: 0</div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+                                <p class="text-xl font-bold text-gray-800" id="currentQuestion"></p>
+                            </div>
+                            <div class="space-y-3" id="optionsContainer"></div>
+                            <div class="mt-6 p-3 rounded-lg text-center font-semibold transition duration-300 ease-in-out hidden" id="feedbackMessage"></div>
+                            <div class="mt-4 flex justify-between space-x-4">
+                                <button class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50" id="prevButton" onclick="previousQuestion()" data-i18n="quiz_prev_button">← Previous</button>
+                                <button class="flex-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out disabled:opacity-50" id="nextButton" onclick="nextQuestion()" data-i18n="quiz_next_button">Next Question →</button>
+                            </div>
+                        </div>
+                        <div class="p-6 md:p-8 hidden text-center" id="resultsScreen">
+                            <h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="results_title">Test Completed!</h2>
+                            <p class="text-xl text-gray-600 mb-8" id="userGreeting"></p>
+                            <div class="space-y-3">
+                                <div class="bg-green-100 text-green-800 p-4 rounded-lg font-semibold border-2 border-green-300" data-i18n-prefix="results_final_score">Final Score: <span class="text-2xl ml-2" id="finalScore"></span></div>
+                                <div class="bg-blue-100 text-blue-800 p-4 rounded-lg font-semibold border-2 border-blue-300" data-i18n-prefix="results_percentage">Percentage: <span class="text-2xl ml-2" id="finalPercentage"></span></div>
+                            </div>
+                            <div class="mt-8 text-left hidden border rounded-xl overflow-hidden shadow-lg" id="summaryContainer">
+                                <h3 class="p-4 bg-gray-100 text-xl font-bold text-gray-800 mb-0 border-b" data-i18n="results_review_header">Detailed Test Review</h3>
+                            </div>
+                            <!-- UPDATED BUTTON GROUP -->
+                            <div class="mt-8 grid grid-cols-3 gap-3">
+                                <!-- RESTART BUTTON -->
+                                <button class="col-span-3 sm:col-span-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="restartCurrentQuiz()" data-i18n="results_restart_test">Restart This Test</button>
+                                <!-- View Review -->
+                                <button class="col-span-3 sm:col-span-1 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="showDirectReview()" id="viewReviewShortcut" data-i18n="results_view_review">View Review</button>
+                                <!-- Choose Another Test -->
+                                <button class="col-span-3 sm:col-span-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="resetQuiz()" data-i18n="results_another_test">Choose Another Test</button>
+                                <!-- View History -->
+                                <button class="col-span-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out mt-3" id="viewHistoryFromResults" data-i18n="results_view_history">View History</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Support Section -->
+            <section id="support-section" class="content-section hidden p-4 md:p-8">
+                <div class="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 text-center max-w-md mx-auto">
+                    <h2 class="text-4xl font-extrabold text-gray-800 mb-4 border-b pb-2" data-i18n="support_title">Support Our Mission</h2>
+                    <p class="text-lg text-gray-600 mb-6" data-i18n="support_intro">If you find our quizzes helpful, consider supporting our work! Your contribution helps us maintain the site and create more high-quality educational content.</p>
+                    <div class="space-y-4">
+                        <button class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" onclick="copyToClipboard('https://buymeacoffee.com/musabikbal', 'supportFeedback', langData[currentLang].support_copy_success)" data-i18n="support_copy_button">Copy Buy Me a Coffee Link</button>
+                        <a href="https://buymeacoffee.com/musabikbal" target="_blank" rel="noopener noreferrer" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-150 ease-in-out" data-i18n="support_coffee_button">Buy us a Coffee!</a>
+                        <div id="supportFeedback" class="hidden p-3 rounded-lg text-center font-semibold text-sm"></div>
+                        <p class="text-sm text-gray-500 pt-2" data-i18n="support_thank_you">Thank you for helping us keep English learning accessible!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <div class="bee-row bee-row-3 mt-auto bg-white border-t border-gray-200">
+            <div class="bee-row-content max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                <div class="bee-col bee-col-w12">
+                    <div class="bee-block bee-paragraph text-center text-sm text-gray-500">
+                        <p>© Copyright <strong>EngQuizzesForAll</strong> All Rights Reserved</p>
+                        <p>Designed by Musab İKBAL SUBAŞI</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="levelSelectionModal">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-xl font-bold text-gray-800" id="modalLevelTitle"></h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="hideLevelModal()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-sm text-gray-600 mb-4" id="modalLevelDescription"></p>
+            <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 overflow-y-auto max-h-96" id="testSelectionContainer"></div>
+            <button class="mt-6 w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="hideLevelModal()" data-i18n="modal_back_to_levels">Back to Level Selection</button>
+        </div>
+    </div>
+    
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="questionPanelModal">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-lg">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-xl font-bold text-gray-800" data-i18n="modal_overview_title">Question Overview (Jump to...)</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="togglePanel(false)">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="grid grid-cols-6 sm:grid-cols-8 gap-2 overflow-y-auto max-h-96" id="questionPanel"></div>
+            <button class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="togglePanel(false)" data-i18n="modal_close_panel">Close Panel</button>
+        </div>
+    </div>
+    
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="historyModal">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-4xl history-modal">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-xl font-bold text-gray-800" data-i18n="modal_history_title">Quiz History</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="toggleHistoryModal(false)">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="mb-4 flex justify-between items-end">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1" for="historyFilter" data-i18n="modal_history_filter">Filter by Test:</label>
+                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 sm:text-sm" id="historyFilter">
+                        <option value="all" data-i18n="modal_history_all_tests">All Tests</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" id="clearHistoryButton" data-i18n="modal_history_clear">Clear History</button>
+                </div>
+            </div>
+            <div class="overflow-y-auto max-h-96" id="historyContainer"></div>
+            <div class="mt-6 flex justify-between">
+                <div class="text-sm text-gray-600" id="historyStats"></div>
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="toggleHistoryModal(false)" data-i18n="modal_close">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden p-4" id="reviewDetailsModal">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-full max-w-6xl history-modal">
+            <div class="flex justify-between items-center mb-4 border-b pb-3">
+                <h3 class="text-xl font-bold text-gray-800" id="reviewModalTitle" data-i18n="modal_review_title">Detailed Review</h3>
+                <button class="text-gray-500 hover:text-gray-800" onclick="toggleReviewDetailsModal(false)">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-y-auto max-h-[70vh] text-left border rounded-xl shadow-inner" id="reviewDetailsContainer"></div>
+            <button class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="toggleReviewDetailsModal(false)" data-i18n="modal_close_review">Close Review</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
