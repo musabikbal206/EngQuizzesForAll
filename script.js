@@ -256,6 +256,19 @@ const langData = {
 		msg_incorrect_choice: 'The correct answer is <span class="font-extrabold text-green-700">{label}. {text}</span>.',
 	}
 };
+// NEW: Update mobile score display
+function updateMobileScoreDisplay() {
+    const mobileScoreEl = document.getElementById('quizScoreMobile');
+    const desktopScoreEl = document.getElementById('quizScore');
+    const currentScore = calculateScore();
+    
+    if (mobileScoreEl) {
+        mobileScoreEl.textContent = getLangText('quiz_score', { score: currentScore });
+    }
+    if (desktopScoreEl) {
+        desktopScoreEl.textContent = getLangText('quiz_score', { score: currentScore });
+    }
+}
 let currentLang = 'en';
 function getLangText(key, replacements = {}) {
 	let text = langData[currentLang][key] || langData['en'][key] || key;
@@ -263,42 +276,6 @@ function getLangText(key, replacements = {}) {
 		text = text.replace(new RegExp(`\\{${k}\\}`, 'g'), v);
 	}
 	return text;
-}
-function applyTranslations() {
-	const elements = document.querySelectorAll('[data-i18n], [data-i18n-prefix], [data-i18n-placeholder], [data-i18n-html]');
-	document.documentElement.lang = currentLang;
-	document.title = getLangText('page_title');
-	const langToggle = document.getElementById('languageToggle');
-	langToggle.textContent = langData[currentLang].lang_name;
-	elements.forEach(el => {
-		const key = el.getAttribute('data-i18n');
-		const prefixKey = el.getAttribute('data-i18n-prefix');
-		const placeholderKey = el.getAttribute('data-i18n-placeholder');
-		const htmlKey = el.getAttribute('data-i18n-html');
-		if (key) {
-			el.textContent = getLangText(key);
-		}
-		if (prefixKey) {
-		}
-		if (placeholderKey) {
-			el.placeholder = getLangText(placeholderKey);
-		}
-		if (htmlKey) {
-			el.innerHTML = getLangText(htmlKey);
-		}
-	});
-	const activeSection = document.querySelector('.content-section:not(.hidden)');
-	if (activeSection && activeSection.id === 'quiz-section') {
-		if (!startScreen.classList.contains('hidden')) {
-			const user = getLoggedInUser();
-			if (user) {
-				document.getElementById('quizStartGreeting').textContent = getLangText('feedback_welcome_back', { name: user.firstName });
-			}
-		}
-		if (!quizScreen.classList.contains('hidden')) {
-			renderQuestion();
-		}
-	}
 }
 function toggleLanguage() {
 	currentLang = currentLang === 'en' ? 'tr' : 'en';
@@ -320,49 +297,6 @@ function toggleMobileMenu() {
 	menuIcon.classList.toggle('hidden');
 	closeIcon.classList.toggle('hidden');
 }
-const sha256 = (function () {
-	function H(n) { return (n < 1e1 ? "0" : "") + n.toString(16); }
-	function K(t) { return new Uint32Array(t); }
-	function L(t) { return (t << 1) | (t >>> 31); }
-	function M(t, n, e) {
-		for (var o = K(64), r = K(t.length), i = 0, a = 0; i < t.length; i++) {
-			var s = t.charCodeAt(i);
-			s < 128 ? r[a++] = s : s < 2048 ? (r[a++] = 192 | s >>> 6, r[a++] = 128 | 63 & s) : s < 65536 ? (r[a++] = 224 | s >>> 12, r[a++] = 128 | 63 & s >>> 6, r[a++] = 128 | 63 & s) : (r[a++] = 240 | s >>> 18, r[a++] = 128 | 63 & s >>> 12, r[a++] = 128 | 63 & s >>> 6, r[a++] = 128 | 63 & s)
-		}
-		var u = a;
-		r[a++] = 128;
-		while (a % 4 != 0) r[a++] = 0;
-		var c = a, l = 8 * u;
-		r = K(r.subarray(0, c)), r[c + 3] = l;
-		var h = K([1779033703, 3144134277, 1013904242, 2773480762, 1359893119, 2600497554, 528734635, 1541459225]),
-			d = K([1116352408, 1899447447, 30493613, 2774859214, 1548603684, 1845253075, 1057001556, 1776008075, 329, 2870378385, 2371520116, 728588258, 4147045155, 3058866530, 1695183700, 4066037854, 1500085863, 4265063162, 49951639, 1774581423, 1856346720, 3175218132, 2812728082, 380312681, 3812720984, 107323719, 258167733, 404899539, 546648774, 3482320498, 268688523, 643242784, 2528726461, 2221584346, 2191690487, 3484516769, 668153090, 1503823053, 3350630737, 2307844015, 3082530560, 2988939681, 2942701770, 3140889279, 1047163013, 2981914852, 2598448372, 385960075, 4023724817, 3060561634, 1016675549, 1243904825, 412217684, 1828139943, 2780759356, 3451239634, 532859570, 1781679723, 3968817235, 1958447747, 1325977935, 1073839843, 3180726716, 2636547167, 3750689407]),
-			f = K(8);
-		for (var p = 0; p < r.length; p += 16) {
-			for (var g = 0; g < 16; g++) o[g] = r[p + g];
-			for (var g = 16; g < 64; g++) {
-				var w = o[g - 2], S = (L(w) ^ L(w >>> 9) ^ w >>> 10),
-					m = o[g - 15], v = (L(m) ^ L(m >>> 7) ^ m >>> 18);
-				o[g] = (o[g - 16] + v + o[g - 7] + S) | 0
-			}
-			for (var g = 0; g < 8; g++) f[g] = h[g];
-			for (var g = 0; g < 64; g++) {
-				var y = f[7], b = (L(y) ^ L(y >>> 6) ^ L(y >>> 11)),
-					_ = f[4], E = (_ ^ L(_ >>> 14) ^ L(_ >>> 18)),
-					x = f[0], T = (L(x) ^ L(x >>> 2) ^ L(x >>> 13)),
-					C = (f[4] & f[5] ^ ~f[4] & f[6]),
-					I = (f[0] & f[1] ^ f[0] & f[2] ^ f[1] & f[2]),
-					R = (f[7] + b + C + d[g] + o[g]) | 0,
-					j = (T + I) | 0;
-				f[7] = f[6], f[6] = f[5], f[5] = f[4], f[4] = (f[3] + R) | 0, f[3] = f[2], f[2] = f[1], f[1] = f[0], f[0] = (R + j) | 0
-			}
-			for (var g = 0; g < 8; g++) h[g] = (h[g] + f[g]) | 0
-		}
-		var z = "";
-		for (var g = 0; g < 8; g++) z += H(h[g] >>> 24) + H(h[g] >>> 16 & 255) + H(h[g] >>> 8 & 255) + H(h[g] & 255);
-		return z;
-	}
-	return L;
-})();
 function hashPassword(password) {
 	if (typeof crypto !== 'undefined' && crypto.subtle) {
 		const encoder = new TextEncoder();
@@ -947,7 +881,6 @@ const QUESTION_BANK = [
 	{ "q": "The more you practice, ... you'll become.", "o": ["the more confident", "more confident", "the most confident", "confident", "confidently"], "a": "A", "e": "The structure 'the + comparative..., the + comparative' shows that two things change together." },
 	{ "q": "... was the weather that we canceled the picnic.", "o": ["Such", "So", "It", "There", "What"], "a": "A", "e": "The structure 'Such + be + noun + that' shows result or consequence." }
 ];
-const TOTAL_QUESTIONS = 210;
 const TOTAL_TESTS = 30;
 const TEST_SIZE = 10;
 let currentQuestionIndex = 0;
@@ -1066,6 +999,10 @@ function calculateScore() {
 		}
 	}
 	score = currentScore;
+	
+	// NEW: Update mobile score display
+	updateMobileScoreDisplay();
+	
 	return currentScore;
 }
 function updateOptionStyles(questionData, selectedAnswer) {
@@ -1260,14 +1197,6 @@ for (let i = 0; i < shuffledQuestions.length; i++) {
 	
 	questionPanelEl.appendChild(button);
 }
-
-// Remove this duplicate disabling code since we handle it above
-// if (isTimeExpired) {
-//     const buttons = questionPanelEl.querySelectorAll('button');
-//     buttons.forEach(btn => {
-//         btn.disabled = true;
-//     });
-// }
 }
 function jumpToQuestion(index) {
 	// NEW: Prevent jumping to previous questions in review mode
@@ -1320,6 +1249,16 @@ function renderQuestion() {
 		nextButton.classList.remove('bg-red-600', 'hover:bg-red-700');
 	}
 	nextButton.disabled = isTimeExpired;
+	
+	// NEW: Hide question overview button in review mode
+	const overviewButton = document.querySelector('[onclick="togglePanel(true)"]');
+	if (overviewButton) {
+		if (isReviewMode) {
+			overviewButton.style.display = 'none';
+		} else {
+			overviewButton.style.display = 'block';
+		}
+	}
 }
 function submitAnswer(answer) {
 	if (isTimeExpired || userAnswers[currentQuestionIndex] !== null) {
@@ -1662,7 +1601,7 @@ function toggleReviewDetailsModal(show) {
 		reviewDetailsModal.classList.add('hidden');
 	}
 }
-	function showLevelModal(level) {
+function showLevelModal(level) {
 	modalLevelTitle.textContent = `${level} Level`;
 	let description = '';
 	let tests = [];
@@ -1685,9 +1624,12 @@ function toggleReviewDetailsModal(show) {
 	modalLevelDescription.textContent = description;
 	cefrTestSelectionContainer.innerHTML = '';
 	
+	// NEW: Add the 2x5 grid class
+	cefrTestSelectionContainer.className = 'test-grid-2x5';
+	
 	tests.forEach(testNum => {
 		const button = document.createElement('button');
-		button.className = `${buttonClass} font-semibold py-3 px-4 rounded-lg shadow-md border-2 transition duration-150 ease-in-out`;
+		button.className = `${buttonClass} font-semibold py-2 px-1 sm:py-3 sm:px-2 text-xs sm:text-sm rounded-lg shadow-md border-2 transition duration-150 ease-in-out flex items-center justify-center min-h-[3rem]`;
 		button.textContent = `Test ${testNum}`;
 		button.onclick = () => selectTest(testNum, level);
 		cefrTestSelectionContainer.appendChild(button);
@@ -1728,6 +1670,13 @@ function startTest(testNumber) {
 	startScreen.classList.add('hidden');
 	quizScreen.classList.remove('hidden');
 	resultsScreen.classList.add('hidden');
+	
+	// NEW: Hide question overview button in review mode
+	const overviewButton = document.querySelector('[onclick="togglePanel(true)"]');
+	if (overviewButton && isReviewMode) {
+		overviewButton.style.display = 'none';
+	}
+	
 	startTimer();
 	renderQuestion();
 	renderQuestionPanel();
@@ -1762,6 +1711,13 @@ function resetQuiz() {
 	summaryContainer.classList.add('hidden');
 	feedbackMessageEl.classList.add('hidden');
 	startFeedbackMessageEl.classList.add('hidden');
+	
+	// NEW: Show question overview button again when resetting
+	const overviewButton = document.querySelector('[onclick="togglePanel(true)"]');
+	if (overviewButton) {
+		overviewButton.style.display = 'block';
+	}
+	
 	const user = getLoggedInUser();
 	if (user) {
 		document.getElementById('firstName').value = user.firstName;
@@ -1776,9 +1732,27 @@ function updateMobileMenu() {
 	
 	mobileMenuItems.innerHTML = ''; // Clear existing items
 	
+	// Add close button at top for mobile
+	const closeHeader = document.createElement('div');
+	closeHeader.className = 'flex justify-between items-center p-4 border-b border-gray-200 mb-2 sm:hidden';
+	closeHeader.innerHTML = `
+		<span class="text-lg font-semibold text-gray-800">Menu</span>
+		<button onclick="toggleMobileMenu()" class="p-2 rounded-lg text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+			<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+			</svg>
+		</button>
+	`;
+	mobileMenuItems.appendChild(closeHeader);
+	
 	menuLinks.forEach(link => {
+		const listItem = document.createElement('li');
+		listItem.className = 'w-full';
+		
 		const clone = link.cloneNode(true);
 		clone.classList.remove('nav-active');
+		clone.classList.add('block', 'w-full', 'text-left', 'px-4', 'py-3', 'text-gray-700', 'hover:bg-teal-50', 'hover:text-teal-700', 'rounded-lg', 'transition', 'duration-150');
+		
 		clone.onclick = (e) => {
 			e.preventDefault();
 			const section = clone.getAttribute('data-section');
@@ -1789,17 +1763,23 @@ function updateMobileMenu() {
 			}
 			toggleMobileMenu();
 		};
-		mobileMenuItems.appendChild(clone);
+		
+		listItem.appendChild(clone);
+		mobileMenuItems.appendChild(listItem);
 	});
 	
-	const langToggleClone = document.createElement('li');
-	langToggleClone.className = 'mt-2';
-	langToggleClone.innerHTML = `
-		<button onclick="toggleLanguage()" class="w-full text-center px-3 py-1.5 text-sm font-bold rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 transition duration-150 ease-in-out">
-			${langData[currentLang].lang_name}
+	// Language toggle with better mobile styling
+	const langListItem = document.createElement('li');
+	langListItem.className = 'mt-4 p-4 border-t border-gray-200';
+	langListItem.innerHTML = `
+		<button onclick="toggleLanguage()" class="w-full flex items-center justify-center px-4 py-3 text-base font-semibold rounded-xl bg-gradient-to-r from-teal-500 to-blue-500 text-white shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
+			<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
+			</svg>
+			${getLangText('lang_name')}
 		</button>
 	`;
-	mobileMenuItems.appendChild(langToggleClone);
+	mobileMenuItems.appendChild(langListItem);
 }
 
 function init() {
@@ -1839,8 +1819,6 @@ function applyTranslations() {
 		const htmlKey = el.getAttribute('data-i18n-html');
 		if (key) {
 			el.textContent = getLangText(key);
-		}
-		if (prefixKey) {
 		}
 		if (placeholderKey) {
 			el.placeholder = getLangText(placeholderKey);
