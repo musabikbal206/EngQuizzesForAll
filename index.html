@@ -368,6 +368,24 @@
             <button class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-md transition duration-150 ease-in-out" onclick="toggleReviewDetailsModal(false)" data-i18n="modal_close_review">Close Review</button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("contextmenu", function(event){
+        event.preventDefault();
+        });
+        
+        document.onkeydown = function(e) {
+            if (
+                (e.ctrlKey && e.keyCode === 85) || // Ctrl + U
+                (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl + Shift + I
+                (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl + Shift + J
+                (e.keyCode === 123) // F12
+            ) {
+                e.preventDefault(); // Crucial: This stops the browser's default action
+                return false;
+            }
+        }
+    </script>
     
     <script src="script.js"></script>
 </body>
